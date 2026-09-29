@@ -3,6 +3,7 @@ package com.pucgo.edu.treinamais.model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ConnectionFactory {
     private String IP = "";
@@ -19,7 +20,7 @@ public class ConnectionFactory {
     }
 
     public Connection getConn() throws SQLException{
-        System.err.println("Dados de conexão não implementados");
+        if (Objects.equals(IP, "")) throw new UnsupportedOperationException("Dados de conexão incompletos");
         return DriverManager.getConnection(URL, USUARIO, SENHA);
     }
 }

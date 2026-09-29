@@ -37,18 +37,15 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
 
-    // Room Database
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
 
-    // Retrofit & OkHttp
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
     implementation(libs.gson)
 
-    // Sessão Segura
     implementation(libs.security.crypto)
 
     testImplementation(libs.junit)

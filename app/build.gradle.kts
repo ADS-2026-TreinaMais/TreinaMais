@@ -33,10 +33,23 @@ android {
 
 dependencies {
     implementation(libs.appcompat)
-    implementation(libs.design)
     implementation(libs.material)
     implementation(libs.constraintlayout)
-    implementation(libs.recyclerview.v7)
+    implementation(libs.recyclerview)
+
+    // Room Database
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+
+    // Retrofit & OkHttp
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.gson)
+
+    // Sessão Segura
+    implementation(libs.security.crypto)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

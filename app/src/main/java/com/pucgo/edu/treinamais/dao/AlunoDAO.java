@@ -19,13 +19,6 @@ public class AlunoDAO {
 
     private static final String TAG = "AlunoDAO";
 
-    /**
-     * Insere um novo Aluno e seu respectivo registro de Usuário com suporte a transação.
-     *
-     * @param aluno Dados do aluno
-     * @param senhaHash Hash ou senha para o usuário
-     * @return true se a inserção for bem-sucedida, false caso contrário
-     */
     public boolean inserir(Aluno aluno, String senhaHash) {
         String sqlUsuario = "INSERT INTO usuarios (nome, email, senha_hash, tipo, status) VALUES (?, ?, ?, 'ALUNO', 'ATIVO')";
         String sqlAluno = "INSERT INTO alunos (usuario_id, professor_id, cpf, data_nascimento, telefone) VALUES (?, ?, ?, ?, ?)";
@@ -33,9 +26,8 @@ public class AlunoDAO {
         Connection conn = null;
         try {
             conn = ConnectionFactory.getInst().getConn();
-            conn.setAutoCommit(false); // Início da transação atômica
+            conn.setAutoCommit(false);
 
-            // 1. Inserir em usuarios
             long usuarioId;
             try (PreparedStatement stmtUsuario = conn.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS)) {
                 stmtUsuario.setString(1, aluno.getNome());
@@ -58,7 +50,6 @@ public class AlunoDAO {
                 }
             }
 
-            // 2. Inserir em alunos
             try (PreparedStatement stmtAluno = conn.prepareStatement(sqlAluno, Statement.RETURN_GENERATED_KEYS)) {
                 stmtAluno.setLong(1, usuarioId);
 
@@ -114,9 +105,6 @@ public class AlunoDAO {
         }
     }
 
-    /**
-     * Atualiza os dados do aluno e o nome/email na tabela de usuários.
-     */
     public boolean atualizar(Aluno aluno) {
         String sqlAluno = "UPDATE alunos SET professor_id = ?, cpf = ?, data_nascimento = ?, telefone = ? WHERE id = ?";
         String sqlUser = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";
@@ -173,9 +161,6 @@ public class AlunoDAO {
         }
     }
 
-    /**
-     * Exclui o aluno pelo ID.
-     */
     public boolean excluir(Long id) {
         String sql = "DELETE FROM alunos WHERE id = ?";
         try (Connection conn = ConnectionFactory.getInst().getConn();
@@ -190,9 +175,6 @@ public class AlunoDAO {
         }
     }
 
-    /**
-     * Busca um aluno pelo ID.
-     */
     public Aluno buscarPorId(Long id) {
         String sql = "SELECT a.id, a.usuario_id, a.professor_id, a.cpf, a.data_nascimento, a.telefone, a.criado_em, " +
                      "u.nome, u.email, up.nome as nome_professor " +
@@ -218,9 +200,6 @@ public class AlunoDAO {
         return null;
     }
 
-    /**
-     * Busca um aluno pelo seu CPF.
-     */
     public Aluno buscarPorCpf(String cpf) {
         String sql = "SELECT a.id, a.usuario_id, a.professor_id, a.cpf, a.data_nascimento, a.telefone, a.criado_em, " +
                      "u.nome, u.email, up.nome as nome_professor " +
@@ -246,9 +225,6 @@ public class AlunoDAO {
         return null;
     }
 
-    /**
-     * Lista todos os alunos cadastrados no sistema.
-     */
     public List<Aluno> listarTodos() {
         List<Aluno> lista = new ArrayList<>();
         String sql = "SELECT a.id, a.usuario_id, a.professor_id, a.cpf, a.data_nascimento, a.telefone, a.criado_em, " +
@@ -273,9 +249,6 @@ public class AlunoDAO {
         return lista;
     }
 
-    /**
-     * Lista todos os alunos vinculados a um professor específico.
-     */
     public List<Aluno> listarPorProfessor(Long professorId) {
         List<Aluno> lista = new ArrayList<>();
         String sql = "SELECT a.id, a.usuario_id, a.professor_id, a.cpf, a.data_nascimento, a.telefone, a.criado_em, " +
@@ -303,9 +276,6 @@ public class AlunoDAO {
         return lista;
     }
 
-    /**
-     * Vincula ou altera o professor de um aluno.
-     */
     public boolean vincularProfessor(Long alunoId, Long professorId) {
         String sql = "UPDATE alunos SET professor_id = ? WHERE id = ?";
         try (Connection conn = ConnectionFactory.getInst().getConn();

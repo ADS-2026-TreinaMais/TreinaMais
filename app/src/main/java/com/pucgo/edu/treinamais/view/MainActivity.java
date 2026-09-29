@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         sessionManager = SessionManager.getInstance(this);
-
-        // Auto-login: se a sessão for válida e o token não estiver expirado, vai direto ao painel
         if (sessionManager.isLoggedIn()) {
             abrirPainel();
             return;

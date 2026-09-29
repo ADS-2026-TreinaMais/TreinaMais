@@ -21,7 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static final String TAG = "ApiClient";
-    // 10.0.2.2 mapeia diretamente para o localhost do computador hospedeiro no Emulador Android
     public static final String DEFAULT_BASE_URL = "http://10.0.2.2:8081/";
 
     private static volatile ApiClient instance;
@@ -34,7 +33,6 @@ public class ApiClient {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        // Interceptor de Autenticação e Detecção de Expiração
         Interceptor authInterceptor = new Interceptor() {
             @NonNull
             @Override
@@ -49,10 +47,8 @@ public class ApiClient {
 
                 Response response = chain.proceed(builder.build());
 
-                // Tratamento de sessão revogada ou expirada (HTTP 401)
                 if (response.code() == 401) {
                     Log.w(TAG, "Resposta HTTP 401 detectada! Token expirado ou revogado.");
-                    // Notifica expiração apenas para endpoints autenticados
                     if (!originalRequest.url().encodedPath().contains("/login") &&
                             !originalRequest.url().encodedPath().contains("/register") &&
                             !originalRequest.url().encodedPath().contains("/cadastro")) {

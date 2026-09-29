@@ -22,16 +22,10 @@ public class RegisterRequest {
     private String senha;
 
     private TipoUsuario tipo = TipoUsuario.ALUNO;
-
-    // Campos específicos para Professor
     private String cref;
-
-    // Campos específicos para Aluno
     private String cpf;
     private LocalDate dataNascimento;
     private Long professorId;
-
-    // Contato comum
     private String telefone;
 
     public RegisterRequest() {

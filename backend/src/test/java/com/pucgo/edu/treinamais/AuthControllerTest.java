@@ -80,7 +80,6 @@ class AuthControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.mensagem").value("Usuário cadastrado com sucesso!"));
 
-        // Validar no banco se o usuário foi persistido e a senha foi hasheada
         Usuario usuario = usuarioRepository.findByEmail("lucas@teste.com").orElse(null);
         assertNotNull(usuario);
         assertEquals("Lucas Aluno", usuario.getNome());
@@ -89,7 +88,6 @@ class AuthControllerTest {
         assertTrue(passwordEncoder.matches("senha123", usuario.getSenhaHash()), "A senha deve ser compatível com BCrypt");
         assertNotEquals("senha123", usuario.getSenhaHash(), "A senha pura nunca deve ser salva no banco");
 
-        // Validar registro na tabela alunos
         assertTrue(alunoRepository.existsByCpf("123.456.789-00"));
     }
 
@@ -104,7 +102,7 @@ class AuthControllerTest {
         request.setCref("123456-G/GO");
         request.setTelefone("(62) 98888-7777");
 
-        mockMvc.perform(post("/api/auth/cadastro") // Testando rota alternativa em português
+        mockMvc.perform(post("/api/auth/cadastro")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -121,7 +119,6 @@ class AuthControllerTest {
         request.setEmail("invalido@treinamais.com");
         request.setSenha("prof1234");
         request.setTipo(TipoUsuario.PROFESSOR);
-        // Sem CREF
 
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -150,14 +147,12 @@ class AuthControllerTest {
     @Test
     @DisplayName("Deve autenticar (login) com sucesso, gerar token JWT e registrar sessão ativa no banco")
     void deveRealizarLoginComSucesso() throws Exception {
-        // 1. Cadastra usuário
         RegisterRequest regReq = new RegisterRequest("Mariana", "mariana@teste.com", "segredo123", TipoUsuario.ALUNO);
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(regReq)))
                 .andExpect(status().isCreated());
 
-        // 2. Realiza Login
         LoginRequest loginReq = new LoginRequest("mariana@teste.com", "segredo123");
         MvcResult result = mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -171,7 +166,6 @@ class AuthControllerTest {
         AuthResponse authResponse = objectMapper.readValue(result.getResponse().getContentAsString(), AuthResponse.class);
         assertNotNull(authResponse.getToken());
 
-        // Validar registro da sessão no banco
         assertEquals(1, sessaoRepository.count(), "Deve existir 1 registro de sessão no banco");
         var sessao = sessaoRepository.findAll().get(0);
         assertTrue(sessao.isValida(), "Sessão deve estar válida");
@@ -199,7 +193,6 @@ class AuthControllerTest {
     @Test
     @DisplayName("Deve renovar (refresh) token JWT com sucesso, revogando sessão anterior e criando nova")
     void deveRenovarTokenComSucesso() throws Exception {
-        // Cadastra e loga
         RegisterRequest regReq = new RegisterRequest("Renato", "renato@teste.com", "senha123", TipoUsuario.ALUNO);
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -216,7 +209,6 @@ class AuthControllerTest {
         AuthResponse loginAuth = objectMapper.readValue(loginResult.getResponse().getContentAsString(), AuthResponse.class);
         String tokenOriginal = loginAuth.getToken();
 
-        // Renova o token passando o token original no header Authorization
         MvcResult refreshResult = mockMvc.perform(post("/api/auth/refresh")
                         .header("Authorization", "Bearer " + tokenOriginal))
                 .andExpect(status().isOk())
@@ -227,7 +219,6 @@ class AuthControllerTest {
         String novoToken = refreshAuth.getToken();
         assertNotEquals(tokenOriginal, novoToken, "O novo token deve ser diferente do anterior");
 
-        // Validar que agora existem 2 sessões no banco: a original revogada e a nova ativa
         assertEquals(2, sessaoRepository.count());
         long sessoesAtivas = sessaoRepository.findAll().stream().filter(s -> s.isValida()).count();
         assertEquals(1, sessoesAtivas, "Deve haver exatamente 1 sessão ativa após renovação");
@@ -236,7 +227,6 @@ class AuthControllerTest {
     @Test
     @DisplayName("Deve realizar logout, revogar a sessão no banco e bloquear acessos subsequentes")
     void deveRealizarLogoutERevogarSessao() throws Exception {
-        // Cadastra e loga
         RegisterRequest regReq = new RegisterRequest("Luciana", "luciana@teste.com", "senha123", TipoUsuario.ALUNO);
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -253,24 +243,20 @@ class AuthControllerTest {
         AuthResponse loginAuth = objectMapper.readValue(loginResult.getResponse().getContentAsString(), AuthResponse.class);
         String token = loginAuth.getToken();
 
-        // Acessa rota protegida /api/auth/me com sucesso
         mockMvc.perform(get("/api/auth/me")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("luciana@teste.com"));
 
-        // Realiza Logout
         mockMvc.perform(post("/api/auth/logout")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.mensagem").value("Logout realizado com sucesso! Sessão encerrada."));
 
-        // Validar no banco que a sessão foi revogada
         var sessao = sessaoRepository.findAll().get(0);
         assertNotNull(sessao.getRevogadoEm(), "A sessão deve ter data de revogação");
         assertFalse(sessao.isValida(), "A sessão não deve mais ser válida");
 
-        // Tenta acessar novamente /api/auth/me com o token revogado -> Deve ser 401 Unauthorized
         mockMvc.perform(get("/api/auth/me")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isUnauthorized());

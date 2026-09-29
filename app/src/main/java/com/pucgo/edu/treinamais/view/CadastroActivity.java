@@ -36,7 +36,7 @@ public class CadastroActivity extends AppCompatActivity {
     private Button btnCadastrar;
     private TextView tvVoltarLogin;
 
-    private String tipoSelecionado = "ALUNO"; // Padrão: ALUNO
+    private String tipoSelecionado = "ALUNO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

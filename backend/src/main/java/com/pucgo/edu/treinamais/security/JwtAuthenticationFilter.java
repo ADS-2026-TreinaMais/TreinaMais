@@ -42,8 +42,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (jwt != null && tokenProvider.validateToken(jwt)) {
                 String tokenHash = tokenProvider.hashToken(jwt);
                 var sessaoOpt = sessaoRepository.findByTokenHash(tokenHash);
-
-                // Se houver registro de sessão no banco e ela estiver revogada ou expirada, não autentica
                 if (sessaoOpt.isPresent() && !sessaoOpt.get().isValida()) {
                     filterChain.doFilter(request, response);
                     return;

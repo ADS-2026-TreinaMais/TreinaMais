@@ -17,13 +17,6 @@ public class ProfessorDAO {
 
     private static final String TAG = "ProfessorDAO";
 
-    /**
-     * Insere um novo Professor e seu respectivo registro de Usuário com suporte a transação.
-     *
-     * @param professor Dados do professor
-     * @param senhaHash Hash ou senha para o usuário
-     * @return true se a inserção for bem-sucedida, false caso contrário
-     */
     public boolean inserir(Professor professor, String senhaHash) {
         String sqlUsuario = "INSERT INTO usuarios (nome, email, senha_hash, tipo, status) VALUES (?, ?, ?, 'PROFESSOR', 'ATIVO')";
         String sqlProfessor = "INSERT INTO professores (usuario_id, cref, telefone) VALUES (?, ?, ?)";
@@ -31,9 +24,8 @@ public class ProfessorDAO {
         Connection conn = null;
         try {
             conn = ConnectionFactory.getInst().getConn();
-            conn.setAutoCommit(false); // Início da transação atômica
+            conn.setAutoCommit(false);
 
-            // 1. Inserir em usuarios
             long usuarioId;
             try (PreparedStatement stmtUsuario = conn.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS)) {
                 stmtUsuario.setString(1, professor.getNome());
@@ -56,7 +48,6 @@ public class ProfessorDAO {
                 }
             }
 
-            // 2. Inserir em professores
             try (PreparedStatement stmtProf = conn.prepareStatement(sqlProfessor, Statement.RETURN_GENERATED_KEYS)) {
                 stmtProf.setLong(1, usuarioId);
                 stmtProf.setString(2, professor.getCref().trim());
@@ -76,7 +67,7 @@ public class ProfessorDAO {
             }
 
             professor.setUsuarioId(usuarioId);
-            conn.commit(); // Efetiva transação
+            conn.commit();
             return true;
 
         } catch (SQLException e) {
@@ -94,9 +85,6 @@ public class ProfessorDAO {
         }
     }
 
-    /**
-     * Atualiza os dados do professor e o nome/email na tabela de usuários.
-     */
     public boolean atualizar(Professor professor) {
         String sqlProf = "UPDATE professores SET cref = ?, telefone = ? WHERE id = ?";
         String sqlUser = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";
@@ -136,9 +124,6 @@ public class ProfessorDAO {
         }
     }
 
-    /**
-     * Exclui o professor pelo ID.
-     */
     public boolean excluir(Long id) {
         String sql = "DELETE FROM professores WHERE id = ?";
         try (Connection conn = ConnectionFactory.getInst().getConn();
@@ -153,9 +138,6 @@ public class ProfessorDAO {
         }
     }
 
-    /**
-     * Busca um professor pelo seu ID na tabela de professores.
-     */
     public Professor buscarPorId(Long id) {
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
@@ -178,9 +160,6 @@ public class ProfessorDAO {
         return null;
     }
 
-    /**
-     * Busca um professor pelo ID de Usuário (usuario_id).
-     */
     public Professor buscarPorUsuarioId(Long usuarioId) {
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
@@ -203,9 +182,6 @@ public class ProfessorDAO {
         return null;
     }
 
-    /**
-     * Busca um professor pelo CREF.
-     */
     public Professor buscarPorCref(String cref) {
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
@@ -228,9 +204,6 @@ public class ProfessorDAO {
         return null;
     }
 
-    /**
-     * Busca um professor pelo e-mail do usuário.
-     */
     public Professor buscarPorEmail(String email) {
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
@@ -253,9 +226,6 @@ public class ProfessorDAO {
         return null;
     }
 
-    /**
-     * Retorna a lista de todos os professores cadastrados no sistema.
-     */
     public List<Professor> listarTodos() {
         List<Professor> lista = new ArrayList<>();
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
@@ -277,9 +247,6 @@ public class ProfessorDAO {
         return lista;
     }
 
-    /**
-     * Verifica se determinado CREF já está cadastrado.
-     */
     public boolean existeCref(String cref) {
         String sql = "SELECT COUNT(*) FROM professores WHERE cref = ?";
         try (Connection conn = ConnectionFactory.getInst().getConn();

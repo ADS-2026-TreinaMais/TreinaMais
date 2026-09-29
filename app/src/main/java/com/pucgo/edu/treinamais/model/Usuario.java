@@ -8,8 +8,8 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
-    private String tipo; // "PROFESSOR", "ALUNO", "ADMIN"
-    private String status; // "ATIVO", "INATIVO", "BLOQUEADO"
+    private String tipo;
+    private String status;
     private Date criadoEm;
     private Date atualizadoEm;
 

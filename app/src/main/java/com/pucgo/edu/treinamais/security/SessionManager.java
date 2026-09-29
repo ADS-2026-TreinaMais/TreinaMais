@@ -83,7 +83,7 @@ public class SessionManager {
 
         long expiraEm = authResponse.getExpiraEm() != null ?
                 authResponse.getExpiraEm() :
-                (System.currentTimeMillis() + 86400000L); // Default 24 horas
+                (System.currentTimeMillis() + 86400000L);
 
         preferences.edit()
                 .putString(KEY_TOKEN, authResponse.getToken())
@@ -95,7 +95,6 @@ public class SessionManager {
                 .putLong(KEY_EXPIRA_EM, expiraEm)
                 .apply();
 
-        // Persistência assíncrona no Room Database
         UserSessionEntity entity = new UserSessionEntity(
                 authResponse.getId(),
                 authResponse.getNome(),

@@ -21,12 +21,10 @@ public class DaoTest {
         assertEquals("treinamais", ConnectionFactory.getDbNome());
         assertEquals("postgres", ConnectionFactory.getUsuario());
 
-        // Testar configuração customizada
         ConnectionFactory.configurar("192.168.1.50", "5433", "treinamais_teste", "user_teste", "pass123");
         assertEquals("192.168.1.50", ConnectionFactory.getIp());
         assertEquals("5433", ConnectionFactory.getPorta());
 
-        // Restaurar padrão
         ConnectionFactory.configurar("10.0.2.2", "5432", "treinamais", "postgres", "postgres");
     }
 

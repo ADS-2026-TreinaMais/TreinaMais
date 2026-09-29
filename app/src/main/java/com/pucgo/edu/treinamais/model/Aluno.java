@@ -12,7 +12,6 @@ public class Aluno {
     private String telefone;
     private Date criadoEm;
 
-    // Dados de Usuário e Professor para conveniência nas consultas com JOIN
     private String nome;
     private String email;
     private String nomeProfessor;

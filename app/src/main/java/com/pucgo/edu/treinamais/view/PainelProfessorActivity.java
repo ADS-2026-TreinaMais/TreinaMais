@@ -40,7 +40,6 @@ public class PainelProfessorActivity extends AppCompatActivity {
 
         sessionManager = SessionManager.getInstance(this);
 
-        // Se por algum motivo não houver sessão ativa, redireciona ao login
         if (!sessionManager.isLoggedIn()) {
             redirecionarParaLogin();
             return;
@@ -115,7 +114,6 @@ public class PainelProfessorActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<MessageResponseDto> call, Throwable t) {
-                    // Mesmo com erro de rede, limpa localmente
                     sessionManager.clearSession();
                     redirecionarParaLogin();
                 }

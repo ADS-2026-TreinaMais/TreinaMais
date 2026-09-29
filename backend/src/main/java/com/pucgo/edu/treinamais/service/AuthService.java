@@ -56,7 +56,6 @@ public class AuthService {
 
         TipoUsuario tipo = request.getTipo() != null ? request.getTipo() : TipoUsuario.ALUNO;
 
-        // Validação específica para Professor
         if (tipo == TipoUsuario.PROFESSOR) {
             if (request.getCref() == null || request.getCref().trim().isEmpty()) {
                 throw new IllegalArgumentException("Erro: O CREF é obrigatório para cadastro de professores.");
@@ -66,7 +65,6 @@ public class AuthService {
             }
         }
 
-        // Validação específica para Aluno
         if (tipo == TipoUsuario.ALUNO) {
             if (request.getCpf() != null && !request.getCpf().trim().isEmpty()) {
                 if (alunoRepository.existsByCpf(request.getCpf().trim())) {
@@ -125,7 +123,6 @@ public class AuthService {
             throw new IllegalArgumentException("Conta de usuário inativa ou bloqueada.");
         }
 
-        // Registrar sessão ativa no banco de dados (tabela sessoes) com hash SHA-256 do token
         String tokenHash = tokenProvider.hashToken(jwt);
         LocalDateTime expiraEm = LocalDateTime.now().plusSeconds(tokenProvider.getJwtExpirationMs() / 1000);
         Sessao sessao = new Sessao(usuario, tokenHash, expiraEm);
@@ -169,11 +166,9 @@ public class AuthService {
             throw new IllegalArgumentException("Conta de usuário inativa ou bloqueada.");
         }
 
-        // Revogar sessão atual
         sessao.revogar();
         sessaoRepository.save(sessao);
 
-        // Gerar novo token JWT e registrar nova sessão
         String novoJwt = tokenProvider.generateTokenFromUsername(usuario.getEmail());
         String novoTokenHash = tokenProvider.hashToken(novoJwt);
         LocalDateTime novaExpiracao = LocalDateTime.now().plusSeconds(tokenProvider.getJwtExpirationMs() / 1000);
@@ -205,7 +200,6 @@ public class AuthService {
                     sessaoRepository.save(sessao);
                 });
             } catch (Exception ignored) {
-                // Tratamento seguro para tokens com formatação incorreta
             }
         }
 

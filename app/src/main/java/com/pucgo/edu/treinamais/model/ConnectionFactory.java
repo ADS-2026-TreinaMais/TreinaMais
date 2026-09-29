@@ -7,7 +7,6 @@ import java.util.Objects;
 
 public class ConnectionFactory {
 
-    // Configurações padrão apontando para o PostgreSQL (10.0.2.2 no emulador = localhost do PC)
     private static String IP = "10.0.2.2";
     private static String PORTA = "5432";
     private static String USUARIO = "postgres";
@@ -46,7 +45,6 @@ public class ConnectionFactory {
         return DriverManager.getConnection(url, USUARIO, SENHA);
     }
 
-    // Getters para inspeção
     public static String getIp() { return IP; }
     public static String getPorta() { return PORTA; }
     public static String getDbNome() { return DB_NOME; }

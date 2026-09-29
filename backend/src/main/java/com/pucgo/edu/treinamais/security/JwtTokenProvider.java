@@ -71,7 +71,6 @@ public class JwtTokenProvider {
                     .parseSignedClaims(authToken);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            // Em caso de token inválido, expirado ou corrompido
             return false;
         }
     }

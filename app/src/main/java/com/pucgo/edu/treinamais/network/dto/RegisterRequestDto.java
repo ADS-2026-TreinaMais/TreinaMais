@@ -14,7 +14,7 @@ public class RegisterRequestDto {
     private String senha;
 
     @SerializedName("tipo")
-    private String tipo; // "ALUNO" ou "PROFESSOR"
+    private String tipo;
 
     @SerializedName("cref")
     private String cref;

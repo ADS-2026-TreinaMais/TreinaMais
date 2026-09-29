@@ -21,24 +21,21 @@ public class SessionSecurityTest {
     public void testUserSessionEntityExpiracao() {
         long agora = System.currentTimeMillis();
 
-        // 1. Sessão com expiração no futuro (ativa)
         UserSessionEntity sessaoAtiva = new UserSessionEntity(
                 1L, "Professor Teste", "prof@teste.com", "PROFESSOR", "ATIVO",
-                "jwt.token.valido", agora + 3600000L // +1 hora
+                "jwt.token.valido", agora + 3600000L
         );
         assertFalse("Sessão válida não deve estar expirada", sessaoAtiva.isExpired());
 
-        // 2. Sessão com expiração no passado (expirada)
         UserSessionEntity sessaoExpirada = new UserSessionEntity(
                 2L, "Aluno Teste", "aluno@teste.com", "ALUNO", "ATIVO",
-                "jwt.token.expirado", agora - 5000L // -5 segundos
+                "jwt.token.expirado", agora - 5000L
         );
         assertTrue("Sessão passada deve ser detectada como expirada", sessaoExpirada.isExpired());
     }
 
     @Test
     public void testManifestPermissoesDeclaradas() throws Exception {
-        // Validação da declaração de permissões de rede no AndroidManifest.xml
         File manifestFile = new File("src/main/AndroidManifest.xml");
         assertTrue("Arquivo AndroidManifest.xml deve existir", manifestFile.exists());
 
@@ -107,7 +104,6 @@ public class SessionSecurityTest {
         );
         assertFalse(sessao.isExpired());
 
-        // Simulação do logout
         sessao.setToken(null);
         sessao.setExpiraEm(0L);
 

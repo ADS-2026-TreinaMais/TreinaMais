@@ -53,7 +53,7 @@ public class SecurityConfig {
                         })
                 )
                 .headers(headers -> headers
-                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable) // Necessário para o console H2
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

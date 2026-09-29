@@ -33,8 +33,10 @@ android {
 
 dependencies {
     implementation(libs.appcompat)
+    implementation(libs.design)
     implementation(libs.material)
     implementation(libs.constraintlayout)
+    implementation(libs.recyclerview.v7)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

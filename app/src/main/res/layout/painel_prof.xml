@@ -5,7 +5,8 @@
     android:id="@+id/clout_painelProf"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Fundo_MEscuro">
+    android:background="@color/Fundo_MEscuro"
+    android:fitsSystemWindows="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,9 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="24dp">
 
-            <!-- Cabeçalho -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:text="PAINEL DO PROFESSOR"
                         android:textColor="#AAAAAA"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         tools:ignore="HardcodedText" />
 
                     <TextView
@@ -74,7 +77,6 @@
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
-            <!-- Cards de Métricas -->
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
@@ -98,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="1"
-                    android:background="#1E1E1E"
+                    android:background="@drawable/bg_card_metrica"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp">
@@ -107,7 +109,7 @@
                         android:id="@+id/alunos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12"
+                        android:text="0"
                         android:textColor="#4CAF50"
                         android:textSize="28sp"
                         android:textStyle="bold" />
@@ -126,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="1"
-                    android:background="#1E1E1E"
+                    android:background="@drawable/bg_card_metrica"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp">
@@ -135,7 +137,7 @@
                         android:id="@+id/treinosCriados"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="8"
+                        android:text="0"
                         android:textColor="#2196F3"
                         android:textSize="28sp"
                         android:textStyle="bold" />
@@ -153,7 +155,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#1E1E1E"
+                    android:background="@drawable/bg_card_metrica"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp">
@@ -162,7 +164,7 @@
                         android:id="@+id/ativosHoje"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5"
+                        android:text="0"
                         android:textColor="#FF9800"
                         android:textSize="28sp"
                         android:textStyle="bold" />
@@ -177,11 +179,10 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Ações Rápidas de Sessão -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="12dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -232,6 +233,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
+
+            <TextView
+                android:id="@+id/tvSemAlunos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_card_metrica"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="Nenhum aluno cadastrado no momento."
+                android:textColor="#777777"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
     </ScrollView>

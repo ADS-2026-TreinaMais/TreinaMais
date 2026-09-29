@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class ConnectionFactory {
-    private String IP = "";
-    private String USUARIO = "";
-    private String SENHA = "";
-    private String dbTreinaMais = "";
-    private String URL = String.format("jdbc:postgressql://%s:%s/%s", IP, "5432", dbTreinaMais);
+    private final String IP = "";
+    private final String USUARIO = "";
+    private final String SENHA = "";
+    private final String DB_NOME = "";
+    private final String URL = String.format("jdbc:postgressql://%s:%s/%s", IP, SENHA, DB_NOME);
     private static ConnectionFactory instancia;
     public ConnectionFactory getInst() {
         if (instancia == null){

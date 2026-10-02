@@ -18,6 +18,7 @@ import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
 import com.pucgo.edu.treinamais.security.SessionManager;
+import com.pucgo.edu.treinamais.view.PerfilActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,6 +49,13 @@ public class PainelProfessorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.painel_prof);
+
+        Button btnPerfil = findViewById(R.id.btnPerfil);
+
+        btnPerfil.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PerfilActivity.class);
+            startActivity(intent);
+        });
 
         sessionManager = SessionManager.getInstance(this);
 

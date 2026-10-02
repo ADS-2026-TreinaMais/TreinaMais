@@ -118,7 +118,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void abrirPainel() {
-        Intent intent = new Intent(MainActivity.this, PainelProfessorActivity.class);
+        Intent intent;
+        if ("ALUNO".equalsIgnoreCase(sessionManager.getUserTipo())) {
+            intent = new Intent(MainActivity.this, PainelAlunoActivity.class);
+        } else {
+            intent = new Intent(MainActivity.this, PainelProfessorActivity.class);
+        }
         startActivity(intent);
         finish();
     }

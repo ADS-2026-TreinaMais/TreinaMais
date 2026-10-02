@@ -30,6 +30,10 @@
         <activity
             android:name=".view.PainelProfessorActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".view.PainelAlunoActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

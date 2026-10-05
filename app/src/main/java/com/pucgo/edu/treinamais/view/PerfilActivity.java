@@ -2,8 +2,6 @@ package com.pucgo.edu.treinamais.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +14,7 @@ import com.pucgo.edu.treinamais.R;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
 import com.pucgo.edu.treinamais.security.SessionManager;
+import com.pucgo.edu.treinamais.databinding.ActivityPerfilBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,39 +23,34 @@ import retrofit2.Response;
 public class PerfilActivity extends AppCompatActivity {
 
     private SessionManager sessionManager;
+    private ActivityPerfilBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_perfil);
 
-        // Componentes da tela
-        TextView txtNome = findViewById(R.id.txtNome);
-        TextView txtEmail = findViewById(R.id.txtEmail);
-        TextView txtTipo = findViewById(R.id.txtTipo);
-
-        Button btnSair = findViewById(R.id.btnSair);
-        Button btnVoltar = findViewById(R.id.btnVoltar);
+        binding = ActivityPerfilBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Recupera a sessão atual
         sessionManager = SessionManager.getInstance(this);
 
         // Exibe os dados do usuário logado
-        txtNome.setText(sessionManager.getUserNome());
-        txtEmail.setText(sessionManager.getUserEmail());
-        txtTipo.setText(sessionManager.getUserTipo());
+        binding.txtNome.setText(sessionManager.getUserNome());
+        binding.txtEmail.setText(sessionManager.getUserEmail());
+        binding.txtTipo.setText(sessionManager.getUserTipo());
 
         // Botão para sair da conta
-        btnSair.setOnClickListener(v -> realizarLogout());
+        binding.btnSair.setOnClickListener(v -> realizarLogout());
 
         // Botão para voltar ao painel
-        btnVoltar.setOnClickListener(v -> finish());
+        binding.btnVoltar.setOnClickListener(v -> finish());
 
         // Ajuste da tela para as barras do sistema
         ViewCompat.setOnApplyWindowInsetsListener(
-                findViewById(R.id.main),
+                binding.main,
                 (v, insets) -> {
 
                     Insets systemBars = insets.getInsets(

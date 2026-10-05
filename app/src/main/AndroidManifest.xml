@@ -10,9 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.TreinaMais">
-
+        android:theme="@style/Theme.TreinaMais"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".view.MainActivity"
             android:exported="true">
@@ -22,14 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.CadastroActivity"
             android:exported="false" />
-
         <activity
             android:name=".view.PainelProfessorActivity"
             android:exported="false" />
+        <activity
+            android:name=".view.PerfilActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

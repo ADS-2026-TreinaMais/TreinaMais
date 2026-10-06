@@ -1,5 +1,5 @@
 [versions]
-agp = "9.3.0"
+agp = "9.4.1"
 kotlin = "2.2.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -14,6 +14,8 @@ retrofit = "2.11.0"
 okhttp = "4.12.0"
 gson = "2.11.0"
 securityCrypto = "1.0.0"
+materialVersion = "1.14.0"
+cardview = "1.0.0"
 
 [libraries]
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -35,6 +37,9 @@ security-crypto = { group = "androidx.security", name = "security-crypto", versi
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
+recyclerview-v7 = { group = "com.android.support", name = "recyclerview-v7", version.ref = "recyclerviewV7" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

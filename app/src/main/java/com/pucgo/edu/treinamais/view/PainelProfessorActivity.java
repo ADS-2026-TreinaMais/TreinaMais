@@ -3,6 +3,7 @@ package com.pucgo.edu.treinamais.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,20 +13,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pucgo.edu.treinamais.R;
-import com.pucgo.edu.treinamais.dao.AlunoDAO;
 import com.pucgo.edu.treinamais.model.Aluno;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
+import com.pucgo.edu.treinamais.network.dto.ProfessorMetricasResponseDto;
 import com.pucgo.edu.treinamais.security.SessionManager;
 import com.pucgo.edu.treinamais.view.PerfilActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,10 +34,14 @@ import retrofit2.Response;
 
 public class PainelProfessorActivity extends AppCompatActivity {
 
+    private static final String TAG = "PainelProfessor";
+
     private TextView tvNome;
     private TextView tvEmail;
     private TextView tvStatusSessao;
     private TextView tvAlunosMetrica;
+    private TextView tvTreinosCriados;
+    private TextView tvAtivosHoje;
     private TextView tvSemAlunos;
     private Button btnLogout;
     private Button btnRenovarSessao;
@@ -71,11 +76,22 @@ public class PainelProfessorActivity extends AppCompatActivity {
         carregarAlunos();
     }
 
+    // Recarrega os dados ao voltar para a tela
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sessionManager.isLoggedIn()) {
+            carregarAlunos();
+        }
+    }
+
     private void inicializarViews() {
         tvNome = findViewById(R.id.tvProfNome);
         tvEmail = findViewById(R.id.tvProfEmail);
         tvStatusSessao = findViewById(R.id.tvStatusSessao);
         tvAlunosMetrica = findViewById(R.id.alunos);
+        tvTreinosCriados = findViewById(R.id.treinosCriados);
+        tvAtivosHoje = findViewById(R.id.ativosHoje);
         tvSemAlunos = findViewById(R.id.tvSemAlunos);
         btnLogout = findViewById(R.id.btnProfLogout);
         btnRenovarSessao = findViewById(R.id.btnRenovarSessao);
@@ -84,6 +100,9 @@ public class PainelProfessorActivity extends AppCompatActivity {
         recyclerAlunos = findViewById(R.id.recyclerAlunos);
         recyclerAlunos.setLayoutManager(new LinearLayoutManager(this));
         alunoAdapter = new AlunoAdapter();
+        alunoAdapter.setOnAlunoClickListener(aluno -> {
+            Toast.makeText(PainelProfessorActivity.this, "Aluno: " + aluno.getNome(), Toast.LENGTH_SHORT).show();
+        });
         recyclerAlunos.setAdapter(alunoAdapter);
     }
 
@@ -105,12 +124,14 @@ public class PainelProfessorActivity extends AppCompatActivity {
     }
 
     private void carregarAlunos() {
-        Executors.newSingleThreadExecutor().execute(() -> {
-            try {
-                AlunoDAO alunoDAO = new AlunoDAO();
-                List<Aluno> lista = alunoDAO.listarTodos();
-                runOnUiThread(() -> {
-                    if (lista != null && !lista.isEmpty()) {
+        ApiClient.getInstance(this).getAuthApiService().getAlunos().enqueue(new Callback<List<Aluno>>() {
+            @Override
+            public void onResponse(Call<List<Aluno>> call, Response<List<Aluno>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Aluno> lista = response.body();
+                    Log.d(TAG, "Alunos recebidos da API: " + lista.size());
+
+                    if (!lista.isEmpty()) {
                         alunoAdapter.setAlunos(lista);
                         tvSemAlunos.setVisibility(View.GONE);
                         recyclerAlunos.setVisibility(View.VISIBLE);
@@ -118,18 +139,53 @@ public class PainelProfessorActivity extends AppCompatActivity {
                             tvAlunosMetrica.setText(String.valueOf(lista.size()));
                         }
                     } else {
+                        alunoAdapter.setAlunos(Collections.emptyList());
                         tvSemAlunos.setVisibility(View.VISIBLE);
                         recyclerAlunos.setVisibility(View.GONE);
                         if (tvAlunosMetrica != null) {
                             tvAlunosMetrica.setText("0");
                         }
                     }
-                });
-            } catch (Exception e) {
-                runOnUiThread(() -> {
+                } else {
+                    Log.e(TAG, "Falha ao consultar /api/alunos: HTTP " + response.code());
                     tvSemAlunos.setVisibility(View.VISIBLE);
                     recyclerAlunos.setVisibility(View.GONE);
-                });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Aluno>> call, Throwable t) {
+                Log.e(TAG, "Erro de rede ao consultar /api/alunos: " + t.getMessage(), t);
+                tvSemAlunos.setVisibility(View.VISIBLE);
+                recyclerAlunos.setVisibility(View.GONE);
+            }
+        });
+
+        carregarMetricas();
+    }
+
+    private void carregarMetricas() {
+        ApiClient.getInstance(this).getAuthApiService().getMetricasProfessor().enqueue(new Callback<ProfessorMetricasResponseDto>() {
+            @Override
+            public void onResponse(Call<ProfessorMetricasResponseDto> call, Response<ProfessorMetricasResponseDto> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ProfessorMetricasResponseDto metricas = response.body();
+
+                    if (tvAlunosMetrica != null) {
+                        tvAlunosMetrica.setText(String.valueOf(metricas.getTotalAlunos()));
+                    }
+                    if (tvTreinosCriados != null) {
+                        tvTreinosCriados.setText(String.valueOf(metricas.getTotalTreinos()));
+                    }
+                    if (tvAtivosHoje != null) {
+                        tvAtivosHoje.setText(String.valueOf(metricas.getAlunosAtivos()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfessorMetricasResponseDto> call, Throwable t) {
+                Log.w(TAG, "Erro ao carregar métricas: " + t.getMessage());
             }
         });
     }

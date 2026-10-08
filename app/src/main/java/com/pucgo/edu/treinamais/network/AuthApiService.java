@@ -1,18 +1,23 @@
 package com.pucgo.edu.treinamais.network;
 
+import com.pucgo.edu.treinamais.model.Aluno;
+import com.pucgo.edu.treinamais.network.dto.AlunoResponseDto;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.LoginRequestDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
+import com.pucgo.edu.treinamais.network.dto.ProfessorMetricasResponseDto;
 import com.pucgo.edu.treinamais.network.dto.RegisterRequestDto;
+import com.pucgo.edu.treinamais.network.dto.TreinoResponseDto;
 
+import java.util.List;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface AuthApiService {
 
@@ -30,4 +35,19 @@ public interface AuthApiService {
 
     @GET("api/auth/me")
     Call<Map<String, String>> getCurrentUser();
+
+    @GET("api/alunos")
+    Call<List<Aluno>> getAlunos();
+
+    @GET("api/alunos/me")
+    Call<AlunoResponseDto> getMeuPerfilAluno();
+
+    @GET("api/professores/me/metricas")
+    Call<ProfessorMetricasResponseDto> getMetricasProfessor();
+
+    @GET("api/treinos")
+    Call<List<TreinoResponseDto>> getTreinos();
+
+    @GET("api/treinos/{id}")
+    Call<TreinoResponseDto> getTreinoPorId(@Path("id") Long id);
 }

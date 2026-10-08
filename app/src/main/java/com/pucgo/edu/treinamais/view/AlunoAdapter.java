@@ -17,6 +17,15 @@ import java.util.List;
 public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHolder> {
 
     private final List<Aluno> alunos = new ArrayList<>();
+    private OnAlunoClickListener listener;
+
+    public interface OnAlunoClickListener {
+        void onAlunoClick(Aluno aluno);
+    }
+
+    public void setOnAlunoClickListener(OnAlunoClickListener listener) {
+        this.listener = listener;
+    }
 
     public void setAlunos(List<Aluno> novosAlunos) {
         this.alunos.clear();
@@ -36,9 +45,22 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
     @Override
     public void onBindViewHolder(@NonNull AlunoViewHolder holder, int position) {
         Aluno aluno = alunos.get(position);
+
         holder.tvNome.setText(aluno.getNome() != null ? aluno.getNome() : "Aluno");
         holder.tvEmail.setText(aluno.getEmail() != null ? aluno.getEmail() : "");
-        holder.tvTelefone.setText(aluno.getTelefone() != null ? aluno.getTelefone() : "");
+
+        if (aluno.getTelefone() != null && !aluno.getTelefone().trim().isEmpty()) {
+            holder.tvTelefone.setText(aluno.getTelefone());
+            holder.tvTelefone.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvTelefone.setVisibility(View.GONE);
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onAlunoClick(aluno);
+            }
+        });
     }
 
     @Override

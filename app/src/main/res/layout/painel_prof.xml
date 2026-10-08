@@ -111,7 +111,7 @@
                     android:layout_gravity="center|top"
                     android:layout_margin="8dp"
                     android:text="0"
-                    android:textColor="#4CAF50"
+                    android:textColor="#26992B"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
@@ -121,7 +121,6 @@
                     android:layout_gravity="bottom|center"
                     android:layout_margin="8dp"
                     android:text="Alunos"
-                    android:textColor="#AAAAAA"
                     android:textSize="12sp"
                     tools:ignore="HardcodedText" />
             </androidx.cardview.widget.CardView>
@@ -151,7 +150,6 @@
                     android:layout_gravity="bottom|center"
                     android:layout_margin="8dp"
                     android:text="Treinos"
-                    android:textColor="#AAAAAA"
                     android:textSize="12sp"
                     tools:ignore="HardcodedText" />
             </androidx.cardview.widget.CardView>
@@ -170,7 +168,7 @@
                     android:layout_gravity="center|top"
                     android:layout_margin="8dp"
                     android:text="0"
-                    android:textColor="#FF9800"
+                    android:textColor="#A96B0C"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
@@ -180,7 +178,6 @@
                     android:layout_gravity="bottom|center"
                     android:layout_margin="8dp"
                     android:text="Ativos hoje"
-                    android:textColor="#AAAAAA"
                     android:textSize="12sp"
                     tools:ignore="HardcodedText" />
             </androidx.cardview.widget.CardView>

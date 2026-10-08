@@ -11,4 +11,7 @@ public interface AlunoTreinoRepository extends JpaRepository<AlunoTreino, Long> 
     List<AlunoTreino> findByAlunoId(Long alunoId);
     List<AlunoTreino> findByAlunoIdAndAtivoTrue(Long alunoId);
     List<AlunoTreino> findByTreinoId(Long treinoId);
+    java.util.Optional<AlunoTreino> findByAlunoIdAndTreinoId(Long alunoId, Long treinoId);
+    boolean existsByAlunoIdAndTreinoIdAndAtivoTrue(Long alunoId, Long treinoId);
+    void deleteByAlunoIdAndTreinoId(Long alunoId, Long treinoId);
 }

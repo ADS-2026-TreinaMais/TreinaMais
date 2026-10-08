@@ -10,11 +10,12 @@ public class Aluno {
     private String cpf;
     private String dataNascimento;
     private String telefone;
-    private Date criadoEm;
+    private String criadoEm;
 
     private String nome;
     private String email;
     private String nomeProfessor;
+    private String professorNome;
 
     public Aluno() {
     }
@@ -86,12 +87,16 @@ public class Aluno {
         this.telefone = telefone;
     }
 
-    public Date getCriadoEm() {
+    public String getCriadoEm() {
         return criadoEm;
     }
 
-    public void setCriadoEm(Date criadoEm) {
+    public void setCriadoEm(String criadoEm) {
         this.criadoEm = criadoEm;
+    }
+
+    public void setCriadoEm(Date criadoEm) {
+        this.criadoEm = criadoEm != null ? criadoEm.toString() : null;
     }
 
     public String getNome() {
@@ -111,11 +116,22 @@ public class Aluno {
     }
 
     public String getNomeProfessor() {
-        return nomeProfessor;
+        return nomeProfessor != null ? nomeProfessor : professorNome;
     }
 
     public void setNomeProfessor(String nomeProfessor) {
         this.nomeProfessor = nomeProfessor;
+    }
+
+    public String getProfessorNome() {
+        return getNomeProfessor();
+    }
+
+    public void setProfessorNome(String professorNome) {
+        this.professorNome = professorNome;
+        if (this.nomeProfessor == null) {
+            this.nomeProfessor = professorNome;
+        }
     }
 
     @Override

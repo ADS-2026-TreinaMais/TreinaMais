@@ -28,6 +28,9 @@
             android:name=".view.PainelProfessorActivity"
             android:exported="false" />
         <activity
+            android:name=".view.PainelAlunoActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.PerfilActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

@@ -2,8 +2,8 @@ package com.pucgo.edu.treinamais.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,13 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pucgo.edu.treinamais.R;
-import com.pucgo.edu.treinamais.model.Aluno;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
-import com.pucgo.edu.treinamais.network.dto.ProfessorMetricasResponseDto;
+import com.pucgo.edu.treinamais.network.dto.TreinoResponseDto;
 import com.pucgo.edu.treinamais.security.SessionManager;
-import com.pucgo.edu.treinamais.view.PerfilActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -32,35 +30,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PainelProfessorActivity extends AppCompatActivity {
+public class PainelAlunoActivity extends AppCompatActivity {
 
-    private static final String TAG = "PainelProfessor";
+    private static final String TAG = "PainelAluno";
 
     private TextView tvNome;
     private TextView tvEmail;
     private TextView tvStatusSessao;
-    private TextView tvAlunosMetrica;
-    private TextView tvTreinosCriados;
-    private TextView tvAtivosHoje;
-    private TextView tvSemAlunos;
+    private TextView tvQtdTreinos;
+    private TextView tvSemTreinos;
+    private Button btnPerfil;
     private Button btnLogout;
     private Button btnRenovarSessao;
     private Button btnVerificarStatus;
-    private RecyclerView recyclerAlunos;
-    private AlunoAdapter alunoAdapter;
+    private RecyclerView recyclerTreinos;
+    private TreinoAdapter treinoAdapter;
     private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.painel_prof);
-
-        Button btnPerfil = findViewById(R.id.btnPerfil);
-
-        btnPerfil.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PerfilActivity.class);
-            startActivity(intent);
-        });
+        setContentView(R.layout.painel_aluno);
 
         sessionManager = SessionManager.getInstance(this);
 
@@ -73,37 +63,32 @@ public class PainelProfessorActivity extends AppCompatActivity {
         configurarDadosUsuario();
         configurarListeners();
         configurarMonitoramentoSessao();
-        carregarAlunos();
+        carregarTreinos();
     }
 
-    // Recarrega os dados ao voltar para a tela
     @Override
     protected void onResume() {
         super.onResume();
         if (sessionManager.isLoggedIn()) {
-            carregarAlunos();
+            carregarTreinos();
         }
     }
 
     private void inicializarViews() {
-        tvNome = findViewById(R.id.tvProfNome);
-        tvEmail = findViewById(R.id.tvProfEmail);
-        tvStatusSessao = findViewById(R.id.tvStatusSessao);
-        tvAlunosMetrica = findViewById(R.id.alunos);
-        tvTreinosCriados = findViewById(R.id.treinosCriados);
-        tvAtivosHoje = findViewById(R.id.ativosHoje);
-        tvSemAlunos = findViewById(R.id.tvSemAlunos);
-        btnLogout = findViewById(R.id.btnProfLogout);
-        btnRenovarSessao = findViewById(R.id.btnRenovarSessao);
-        btnVerificarStatus = findViewById(R.id.btnVerificarStatus);
+        tvNome = findViewById(R.id.tvAlunoNome);
+        tvEmail = findViewById(R.id.tvAlunoEmail);
+        tvStatusSessao = findViewById(R.id.tvStatusSessaoAluno);
+        tvQtdTreinos = findViewById(R.id.tvQtdTreinos);
+        tvSemTreinos = findViewById(R.id.tvSemTreinos);
+        btnPerfil = findViewById(R.id.btnAlunoPerfil);
+        btnLogout = findViewById(R.id.btnAlunoLogout);
+        btnRenovarSessao = findViewById(R.id.btnRenovarSessaoAluno);
+        btnVerificarStatus = findViewById(R.id.btnVerificarStatusAluno);
 
-        recyclerAlunos = findViewById(R.id.recyclerAlunos);
-        recyclerAlunos.setLayoutManager(new LinearLayoutManager(this));
-        alunoAdapter = new AlunoAdapter();
-        alunoAdapter.setOnAlunoClickListener(aluno -> {
-            Toast.makeText(PainelProfessorActivity.this, "Aluno: " + aluno.getNome(), Toast.LENGTH_SHORT).show();
-        });
-        recyclerAlunos.setAdapter(alunoAdapter);
+        recyclerTreinos = findViewById(R.id.recyclerTreinosAluno);
+        recyclerTreinos.setLayoutManager(new LinearLayoutManager(this));
+        treinoAdapter = new TreinoAdapter();
+        recyclerTreinos.setAdapter(treinoAdapter);
     }
 
     private void configurarDadosUsuario() {
@@ -123,74 +108,51 @@ public class PainelProfessorActivity extends AppCompatActivity {
         }
     }
 
-    private void carregarAlunos() {
-        ApiClient.getInstance(this).getAuthApiService().getAlunos().enqueue(new Callback<List<Aluno>>() {
+    private void carregarTreinos() {
+        ApiClient.getInstance(this).getAuthApiService().getTreinos().enqueue(new Callback<List<TreinoResponseDto>>() {
             @Override
-            public void onResponse(Call<List<Aluno>> call, Response<List<Aluno>> response) {
+            public void onResponse(Call<List<TreinoResponseDto>> call, Response<List<TreinoResponseDto>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Aluno> lista = response.body();
-                    Log.d(TAG, "Alunos recebidos da API: " + lista.size());
-
-                    if (!lista.isEmpty()) {
-                        alunoAdapter.setAlunos(lista);
-                        tvSemAlunos.setVisibility(View.GONE);
-                        recyclerAlunos.setVisibility(View.VISIBLE);
-                        if (tvAlunosMetrica != null) {
-                            tvAlunosMetrica.setText(String.valueOf(lista.size()));
+                    List<TreinoResponseDto> treinos = response.body();
+                    Log.d(TAG, "Treinos recebidos da API: " + treinos.size());
+                    if (!treinos.isEmpty()) {
+                        treinoAdapter.setTreinos(treinos);
+                        tvSemTreinos.setVisibility(View.GONE);
+                        recyclerTreinos.setVisibility(View.VISIBLE);
+                        if (tvQtdTreinos != null) {
+                            tvQtdTreinos.setText(String.valueOf(treinos.size()));
                         }
                     } else {
-                        alunoAdapter.setAlunos(Collections.emptyList());
-                        tvSemAlunos.setVisibility(View.VISIBLE);
-                        recyclerAlunos.setVisibility(View.GONE);
-                        if (tvAlunosMetrica != null) {
-                            tvAlunosMetrica.setText("0");
+                        treinoAdapter.setTreinos(Collections.emptyList());
+                        tvSemTreinos.setVisibility(View.VISIBLE);
+                        recyclerTreinos.setVisibility(View.GONE);
+                        if (tvQtdTreinos != null) {
+                            tvQtdTreinos.setText("0");
                         }
                     }
                 } else {
-                    Log.e(TAG, "Falha ao consultar /api/alunos: HTTP " + response.code());
-                    tvSemAlunos.setVisibility(View.VISIBLE);
-                    recyclerAlunos.setVisibility(View.GONE);
+                    Log.e(TAG, "Falha ao consultar /api/treinos: HTTP " + response.code());
+                    tvSemTreinos.setVisibility(View.VISIBLE);
+                    recyclerTreinos.setVisibility(View.GONE);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Aluno>> call, Throwable t) {
-                Log.e(TAG, "Erro de rede ao consultar /api/alunos: " + t.getMessage(), t);
-                tvSemAlunos.setVisibility(View.VISIBLE);
-                recyclerAlunos.setVisibility(View.GONE);
-            }
-        });
-
-        carregarMetricas();
-    }
-
-    private void carregarMetricas() {
-        ApiClient.getInstance(this).getAuthApiService().getMetricasProfessor().enqueue(new Callback<ProfessorMetricasResponseDto>() {
-            @Override
-            public void onResponse(Call<ProfessorMetricasResponseDto> call, Response<ProfessorMetricasResponseDto> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ProfessorMetricasResponseDto metricas = response.body();
-
-                    if (tvAlunosMetrica != null) {
-                        tvAlunosMetrica.setText(String.valueOf(metricas.getTotalAlunos()));
-                    }
-                    if (tvTreinosCriados != null) {
-                        tvTreinosCriados.setText(String.valueOf(metricas.getTotalTreinos()));
-                    }
-                    if (tvAtivosHoje != null) {
-                        tvAtivosHoje.setText(String.valueOf(metricas.getAlunosAtivos()));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProfessorMetricasResponseDto> call, Throwable t) {
-                Log.w(TAG, "Erro ao carregar métricas: " + t.getMessage());
+            public void onFailure(Call<List<TreinoResponseDto>> call, Throwable t) {
+                Log.e(TAG, "Erro de rede ao consultar /api/treinos: " + t.getMessage(), t);
+                tvSemTreinos.setVisibility(View.VISIBLE);
+                recyclerTreinos.setVisibility(View.GONE);
             }
         });
     }
 
     private void configurarListeners() {
+        if (btnPerfil != null) {
+            btnPerfil.setOnClickListener(v -> {
+                Intent intent = new Intent(PainelAlunoActivity.this, PerfilActivity.class);
+                startActivity(intent);
+            });
+        }
         btnLogout.setOnClickListener(v -> realizarLogout());
         btnRenovarSessao.setOnClickListener(v -> realizarRenovacao());
         btnVerificarStatus.setOnClickListener(v -> testarEndpointMe());
@@ -201,7 +163,7 @@ public class PainelProfessorActivity extends AppCompatActivity {
             @Override
             public void onSessionExpired() {
                 runOnUiThread(() -> {
-                    Toast.makeText(PainelProfessorActivity.this, "Sua sessão expirou ou foi revogada. Faça login novamente.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PainelAlunoActivity.this, "Sua sessão expirou. Faça login novamente.", Toast.LENGTH_LONG).show();
                     redirecionarParaLogin();
                 });
             }
@@ -221,7 +183,7 @@ public class PainelProfessorActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<MessageResponseDto> call, Response<MessageResponseDto> response) {
                     sessionManager.clearSession();
-                    Toast.makeText(PainelProfessorActivity.this, "Sessão encerrada com sucesso.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PainelAlunoActivity.this, "Sessão encerrada com sucesso.", Toast.LENGTH_SHORT).show();
                     redirecionarParaLogin();
                 }
 
@@ -252,15 +214,15 @@ public class PainelProfessorActivity extends AppCompatActivity {
                     AuthResponseDto novoAuth = response.body();
                     sessionManager.saveSession(novoAuth);
                     atualizarTextoStatusSessao();
-                    Toast.makeText(PainelProfessorActivity.this, "Sessão renovada com sucesso!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PainelAlunoActivity.this, "Sessão renovada com sucesso!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(PainelProfessorActivity.this, "Não foi possível renovar a sessão. Código: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PainelAlunoActivity.this, "Não foi possível renovar a sessão. Código: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<AuthResponseDto> call, Throwable t) {
-                Toast.makeText(PainelProfessorActivity.this, "Erro de rede ao renovar: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PainelAlunoActivity.this, "Erro de rede ao renovar: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -273,19 +235,19 @@ public class PainelProfessorActivity extends AppCompatActivity {
                     Map<String, String> data = response.body();
                     tvStatusSessao.setText("Autenticado como: " + data.get("email") + "\nPermissões: " + data.get("authorities"));
                 } else if (response.code() == 401) {
-                    Toast.makeText(PainelProfessorActivity.this, "Acesso negado: Token revogado ou expirado no servidor.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PainelAlunoActivity.this, "Acesso negado: Token revogado ou expirado.", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Map<String, String>> call, Throwable t) {
-                Toast.makeText(PainelProfessorActivity.this, "Erro ao consultar /me: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PainelAlunoActivity.this, "Erro ao consultar /me: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void redirecionarParaLogin() {
-        Intent intent = new Intent(PainelProfessorActivity.this, MainActivity.class);
+        Intent intent = new Intent(PainelAlunoActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

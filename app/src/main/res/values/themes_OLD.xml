@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.TreinaMais_OLD" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:windowBackground">@color/Fundo_MEscuro</item>
+        <item name="android:colorBackground">@color/Fundo_MEscuro</item>
+        <item name="textInputOutlinedStyle">@style/tilStyle</item>
+    </style>
+
+    <dimen name="CadastroCanto">4dp</dimen>
+    <dimen name="Margem1">8dp</dimen>
+    <style name="tilStyle"
+        parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/CadastroCanto</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/CadastroCanto</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/CadastroCanto</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/CadastroCanto</item>
+        <item name="android:layout_margin">@dimen/Margem1</item>
+        <item name="boxStrokeColor">@color/outline_color</item>
+        <item name="android:textColorHint">#A0A0A0</item>
+        <item name="hintTextColor">@color/Focused</item>
+    </style>
+
+    <style name="Theme.TreinaMais.Botao1" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/CadastroCanto</item>
+        <item name="android:backgroundTint">@color/Botao_MEscuro</item>
+    </style>
+</resources>

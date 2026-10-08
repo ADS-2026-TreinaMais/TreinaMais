@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.pucgo.edu.treinamais.R;
@@ -22,8 +23,8 @@ import retrofit2.Response;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    private Button btnTipoAluno;
-    private Button btnTipoProfessor;
+    private MaterialButton btnTipoAluno;
+    private MaterialButton btnTipoProfessor;
     private TextInputEditText editNome;
     private TextInputEditText editEmail;
     private TextInputEditText editSenha;
@@ -82,13 +83,17 @@ public class CadastroActivity extends AppCompatActivity {
         if ("PROFESSOR".equals(tipoSelecionado)) {
             crefInputLayout.setVisibility(View.VISIBLE);
             cpfInputLayout.setVisibility(View.GONE);
-            btnTipoProfessor.setAlpha(1.0f);
-            btnTipoAluno.setAlpha(0.5f);
+//            btnTipoProfessor.setAlpha(1.0f);
+//            btnTipoAluno.setAlpha(0.5f);
+            btnTipoAluno.setChecked(false);
+            btnTipoProfessor.setChecked(true);
         } else {
             crefInputLayout.setVisibility(View.GONE);
             cpfInputLayout.setVisibility(View.VISIBLE);
-            btnTipoAluno.setAlpha(1.0f);
-            btnTipoProfessor.setAlpha(0.5f);
+//            btnTipoAluno.setAlpha(1.0f);
+//            btnTipoProfessor.setAlpha(0.5f);
+            btnTipoProfessor.setChecked(false);
+            btnTipoAluno.setChecked(true);
         }
     }
 

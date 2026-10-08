@@ -50,12 +50,12 @@ public class PainelProfessorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.painel_prof);
 
-//        Button btnPerfil = findViewById(R.id.btnPerfil);
-//
-//        btnPerfil.setOnClickListener(v -> {
-//            Intent intent = new Intent(this, PerfilActivity.class);
-//            startActivity(intent);
-//        });
+        Button btnPerfil = findViewById(R.id.btnProfPerfil);
+
+        btnPerfil.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PerfilActivity.class);
+            startActivity(intent);
+        });
 
         sessionManager = SessionManager.getInstance(this);
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clout_painelProf"
@@ -64,17 +65,36 @@
                         android:text="email@treinamais.com"
                         android:textColor="#888888"
                         android:textSize="12sp" />
+
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnProfLogout"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                <!-- Botão Perfil -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPerfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="PERFIL"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:backgroundTint="@android:color/transparent"
+                    app:cornerRadius="8dp"
+                    app:strokeColor="@color/Botao_MEscuro"
+                    app:strokeWidth="1dp" />
+
+                <!-- Botão Sair -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnProfLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:text="SAIR"
                     android:textColor="#FF5252"
                     android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
+                    app:backgroundTint="@android:color/transparent"
+                    app:cornerRadius="8dp"
+                    app:strokeColor="@color/Botao_MEscuro"
+                    app:strokeWidth="1dp" />
+
             </LinearLayout>
 
             <TextView
@@ -121,6 +141,7 @@
                         android:textColor="#AAAAAA"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -149,6 +170,7 @@
                         android:textColor="#AAAAAA"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -176,7 +198,9 @@
                         android:textColor="#AAAAAA"
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
+
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -208,6 +232,7 @@
                     android:textSize="12sp"
                     app:strokeColor="@color/outline_color"
                     tools:ignore="HardcodedText" />
+
             </LinearLayout>
 
             <TextView
@@ -249,6 +274,7 @@
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,17 +21,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PerfilActivity extends AppCompatActivity {
-
     private SessionManager sessionManager;
-    private ActivityPerfilBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ActivityPerfilBinding binding = ActivityPerfilBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
-
-        binding = ActivityPerfilBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Recupera a sessão atual

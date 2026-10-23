@@ -114,8 +114,7 @@
             android:layout_marginBottom="10dp"
             android:hint="SENHA (mínimo 6 caracteres)"
             app:boxBackgroundMode="outline"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/white"
+            app:endIconMode="password_toggle"
             tools:ignore="HardcodedText">
 
             <com.google.android.material.textfield.TextInputEditText

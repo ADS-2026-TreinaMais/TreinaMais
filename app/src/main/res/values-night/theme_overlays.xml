@@ -50,7 +50,11 @@
         <item name="colorOnCustomColor1">@color/colorOnCustomColor1_mediumContrast</item>
         <item name="colorCustomColor1Container">@color/colorCustomColor1Container_mediumContrast</item>
         <item name="colorOnCustomColor1Container">@color/colorOnCustomColor1Container_mediumContrast</item>
+
     </style>
+<!--    <style name="DefaultOutlineBox" parent="Widget.Material3.TextInputEditText.OutlinedBox">-->
+<!--        <item name="strokeColor"></item>-->
+<!--    </style>-->
     <style name="ThemeOverlay.TreinaMaisTheme.HighContrast" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/md_theme_primary_highContrast</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary_highContrast</item>

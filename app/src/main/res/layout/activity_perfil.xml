@@ -6,7 +6,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Fundo_MEscuro"
     android:fitsSystemWindows="true"
     android:paddingStart="24dp"
     android:paddingTop="16dp"
@@ -35,7 +34,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:text="MEU PERFIL"
-                android:textColor="@color/white"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
@@ -53,7 +51,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="NOME"
-                    android:textColor="#AAAAAA"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
@@ -63,7 +60,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Nome"
-                    android:textColor="@color/white"
                     android:textSize="18sp" />
 
                 <!-- E-mail -->
@@ -82,7 +78,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="E-mail"
-                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <!-- Tipo de usuário -->
@@ -101,7 +96,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Tipo de usuário"
-                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -113,14 +107,12 @@
                 android:layout_marginTop="28dp"
                 android:layout_marginBottom="12dp"
                 android:text="CONTA"
-                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <!-- Logout -->
             <Button
                 android:id="@+id/btnSair"
-                style="@style/Theme.TreinaMais.Botao1"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:text="SAIR DA CONTA"
@@ -130,7 +122,6 @@
 
             <Button
                 android:id="@+id/btnVoltar"
-                style="@style/Theme.TreinaMais.Botao1"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="12dp"

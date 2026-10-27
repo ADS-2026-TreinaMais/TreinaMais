@@ -30,7 +30,6 @@
             android:layout_marginBottom="8dp"
             android:text="TreinaMais"
             android:textSize="36sp"
-            android:textStyle="bold"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -39,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:text="Sua rotina de treinos e acompanhamento"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -82,10 +81,8 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginBottom="24dp"
-            android:gravity="center"
             android:text="ENTRAR"
             android:textSize="16sp"
-            app:cornerRadius="6dp"
             tools:ignore="HardcodedText" />
 
         <com.google.android.material.button.MaterialButton
@@ -94,7 +91,6 @@
             android:layout_height="56dp"
             android:text="CRIAR NOVA CONTA"
             android:textSize="16sp"
-            app:cornerRadius="6dp"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>

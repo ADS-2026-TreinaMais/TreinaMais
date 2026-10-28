@@ -22,11 +22,12 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private SessionManager sessionManager;
-    private final ActivityMainBinding B = ActivityMainBinding.inflate(getLayoutInflater());
+    private ActivityMainBinding B;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        B = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(B.getRoot());
 
         sessionManager = SessionManager.getInstance(this);
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configurarListeners() {
-        B.btnLogin.setOnClickListener(v -> realizarLogin());
+        B.btnEntrar.setOnClickListener(v -> realizarLogin());
 
         B.btnIrParaCadastro.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CadastroActivity.class);
@@ -93,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setCarregando(boolean carregando) {
-        B.progressBarLogin.setVisibility(carregando ? View.VISIBLE : View.GONE);
-        B.btnLogin.setEnabled(!carregando);
+        B.progressBarLogin.setVisibility(carregando ? View.VISIBLE : View.INVISIBLE);
+        B.btnEntrar.setEnabled(!carregando);
     }
 
     private void abrirPainel() {

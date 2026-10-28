@@ -46,6 +46,14 @@
     <color name="md_theme_surfaceContainer">#FCEAE6</color>
     <color name="md_theme_surfaceContainerHigh">#F7E4E0</color>
     <color name="md_theme_surfaceContainerHighest">#F1DFDA</color>
+
+
+    <color name="onPrimario">#121212</color>
+    <color name="fundo">#0F0F0F</color>
+    <color name="primario">#C44100</color>
+
+
+
     <color name="md_theme_primary_mediumContrast">#5D2416</color>
     <color name="md_theme_onPrimary_mediumContrast">#FFFFFF</color>
     <color name="md_theme_primaryContainer_mediumContrast">#A15947</color>

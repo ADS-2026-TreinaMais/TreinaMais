@@ -3,14 +3,14 @@ package com.pucgo.edu.treinamais.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.pucgo.edu.treinamais.R;
+import com.pucgo.edu.treinamais.databinding.ActivityMainBinding;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.LoginRequestDto;
@@ -21,60 +21,45 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextInputEditText editEmail;
-    private TextInputEditText editSenha;
-    private Button btnLogin;
-    private Button btnIrParaCadastro;
-    private ProgressBar progressBar;
     private SessionManager sessionManager;
+    private ActivityMainBinding B;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        B = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(B.getRoot());
 
         sessionManager = SessionManager.getInstance(this);
         if (sessionManager.isLoggedIn()) {
             abrirPainel();
             return;
         }
-
-        setContentView(R.layout.activity_main);
-
-        inicializarViews();
         configurarListeners();
     }
 
-    private void inicializarViews() {
-        editEmail = findViewById(R.id.editLoginEmail);
-        editSenha = findViewById(R.id.editLoginSenha);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnIrParaCadastro = findViewById(R.id.btnIrParaCadastro);
-        progressBar = findViewById(R.id.progressBarLogin);
-    }
-
     private void configurarListeners() {
-        btnLogin.setOnClickListener(v -> realizarLogin());
+        B.btnEntrar.setOnClickListener(v -> realizarLogin());
 
-        btnIrParaCadastro.setOnClickListener(v -> {
+        B.btnIrParaCadastro.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CadastroActivity.class);
             startActivity(intent);
         });
     }
 
     private void realizarLogin() {
-        String email = editEmail.getText() != null ? editEmail.getText().toString().trim() : "";
-        String senha = editSenha.getText() != null ? editSenha.getText().toString().trim() : "";
+        String email = B.editLoginEmail.getText() != null ? B.editLoginEmail.getText().toString().trim() : "";
+        String senha = B.editLoginSenha.getText() != null ? B.editLoginSenha.getText().toString().trim() : "";
 
         if (email.isEmpty()) {
-            editEmail.setError("Informe seu e-mail");
-            editEmail.requestFocus();
+            B.editLoginEmail.setError("Informe seu e-mail");
+            B.editLoginEmail.requestFocus();
             return;
         }
 
         if (senha.isEmpty()) {
-            editSenha.setError("Informe sua senha");
-            editSenha.requestFocus();
+            B.editLoginSenha.setError("Informe sua senha");
+            B.editLoginSenha.requestFocus();
             return;
         }
 
@@ -109,12 +94,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setCarregando(boolean carregando) {
-        if (progressBar != null) {
-            progressBar.setVisibility(carregando ? View.VISIBLE : View.GONE);
-        }
-        if (btnLogin != null) {
-            btnLogin.setEnabled(!carregando);
-        }
+        B.progressBarLogin.setVisibility(carregando ? View.VISIBLE : View.INVISIBLE);
+        B.btnEntrar.setEnabled(!carregando);
     }
 
     private void abrirPainel() {

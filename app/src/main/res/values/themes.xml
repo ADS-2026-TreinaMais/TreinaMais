@@ -50,5 +50,23 @@
         <item name="colorOnCustomColor1">@color/colorOnCustomColor1</item>
         <item name="colorCustomColor1Container">@color/colorCustomColor1Container</item>
         <item name="colorOnCustomColor1Container">@color/colorOnCustomColor1Container</item>
+
+
+        <item name="fontFamily">@font/treinamais_fontes</item>
+        <item name="android:fontFamily">@font/treinamais_fontes</item>
+        <item name="materialButtonStyle">@style/BotaoPadrao_Tema</item>
+    </style>
+
+    <style name="TV_Condensado" parent="Widget.MaterialComponents.TextView">
+        <item name="fontFamily">@font/barlow_condensed_regular</item>
+        <item name="android:fontFamily">@font/barlow_condensed_regular</item>
+    </style>
+    <style name="BotaoPadrao_Tema" parent="Widget.Material3.Button">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.TreinaMais.Button</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.TreinaMais.Button" parent="ShapeAppearance.Material3.Corner.Small">
+        <item name="cornerSize">6dp</item>
     </style>
 </resources>

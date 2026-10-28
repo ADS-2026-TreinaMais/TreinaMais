@@ -1,7 +1,7 @@
 <resources>
     <style name="TreinaMaisTheme" parent="Theme.Material3Expressive.Dark.NoActionBar">
-        <item name="colorPrimary">@color/md_theme_primary</item>
-        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+        <item name="colorPrimary">@color/primario</item>
+        <item name="colorOnPrimary">@color/onPrimario</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/md_theme_onPrimaryContainer</item>
         <item name="colorSecondary">@color/md_theme_secondary</item>
@@ -16,7 +16,7 @@
         <item name="colorOnError">@color/md_theme_onError</item>
         <item name="colorErrorContainer">@color/md_theme_errorContainer</item>
         <item name="colorOnErrorContainer">@color/md_theme_onErrorContainer</item>
-        <item name="android:colorBackground">@color/md_theme_background</item>
+        <item name="android:colorBackground">@color/fundo</item>
         <item name="colorOnBackground">@color/md_theme_onBackground</item>
         <item name="colorSurface">@color/md_theme_surface</item>
         <item name="colorOnSurface">@color/md_theme_onSurface</item>
@@ -50,5 +50,22 @@
         <item name="colorOnCustomColor1">@color/colorOnCustomColor1</item>
         <item name="colorCustomColor1Container">@color/colorCustomColor1Container</item>
         <item name="colorOnCustomColor1Container">@color/colorOnCustomColor1Container</item>
+
+        <item name="fontFamily">@font/treinamais_fontes</item>
+        <item name="android:fontFamily">@font/treinamais_fontes</item>
+        <item name="materialButtonStyle">@style/BotaoPadrao_Tema</item>
+    </style>
+
+    <style name="TV_Condensado" parent="Widget.MaterialComponents.TextView">
+        <item name="fontFamily">@font/barlow_condensed_regular</item>
+        <item name="android:fontFamily">@font/barlow_condensed_regular</item>
+    </style>
+    <style name="BotaoPadrao_Tema" parent="Widget.Material3.Button">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.TreinaMais.Button</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.TreinaMais.Button" parent="ShapeAppearance.Material3.Corner.Small">
+        <item name="cornerSize">6dp</item>
     </style>
 </resources>

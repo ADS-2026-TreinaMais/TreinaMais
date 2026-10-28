@@ -9,6 +9,7 @@
     tools:context=".view.MainActivity">
 
     <LinearLayout
+        android:id="@+id/mainLinear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -29,7 +30,6 @@
             android:layout_marginBottom="8dp"
             android:text="TreinaMais"
             android:textSize="36sp"
-            android:textStyle="bold"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:text="Sua rotina de treinos e acompanhamento"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:ignore="HardcodedText" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -76,22 +76,13 @@
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <ProgressBar
-            android:id="@+id/progressBarLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:visibility="gone" />
-
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnEntrar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginBottom="24dp"
-            android:gravity="center"
             android:text="ENTRAR"
             android:textSize="16sp"
-            app:cornerRadius="6dp"
             tools:ignore="HardcodedText" />
 
         <com.google.android.material.button.MaterialButton
@@ -100,9 +91,21 @@
             android:layout_height="56dp"
             android:text="CRIAR NOVA CONTA"
             android:textSize="16sp"
-            app:cornerRadius="6dp"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="181dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="181dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainLinear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

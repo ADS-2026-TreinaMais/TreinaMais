@@ -5,7 +5,6 @@
     android:id="@+id/clout_painelAluno"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Fundo_MEscuro"
     android:fitsSystemWindows="true">
 
     <ScrollView
@@ -52,7 +51,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Aluno"
-                        android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -71,11 +69,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PERFIL"
-                    android:textColor="@color/white"
                     android:textStyle="bold"
-                    app:backgroundTint="@android:color/transparent"
                     app:cornerRadius="8dp"
-                    app:strokeColor="@color/Botao_MEscuro"
                     app:strokeWidth="1dp" />
 
                 <!-- Botão Sair -->
@@ -85,11 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="SAIR"
-                    android:textColor="#FF5252"
                     android:textStyle="bold"
-                    app:backgroundTint="@android:color/transparent"
                     app:cornerRadius="8dp"
-                    app:strokeColor="@color/Botao_MEscuro"
                     app:strokeWidth="1dp" />
             </LinearLayout>
 
@@ -98,7 +90,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:text="SEUS TREINOS"
-                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -147,7 +138,6 @@
 
                 <Button
                     android:id="@+id/btnRenovarSessaoAluno"
-                    style="@style/Theme.TreinaMais.Botao1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"
@@ -158,15 +148,12 @@
 
                 <Button
                     android:id="@+id/btnVerificarStatusAluno"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_weight="1"
                     android:text="TESTAR /ME"
-                    android:textColor="@color/white"
                     android:textSize="12sp"
-                    app:strokeColor="@color/outline_color"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -186,7 +173,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:text="FICHA DE TREINO"
-                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -199,7 +185,6 @@
                 android:gravity="center"
                 android:padding="24dp"
                 android:text="Nenhum treino atribuído pelo seu professor no momento."
-                android:textColor="#888888"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
 

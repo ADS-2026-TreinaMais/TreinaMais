@@ -1,3 +1,5 @@
+import jdk.jfr.internal.JVM
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -33,6 +35,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+}
+
+tasks.withType<JavaCompile> {
+    exclude("**/AlunoDAO_jv.java", "**/Aluno_jv.java", "**/Professor_jv.java")
 }
 
 dependencies {

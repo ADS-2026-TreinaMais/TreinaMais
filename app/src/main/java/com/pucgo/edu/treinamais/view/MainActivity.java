@@ -1,15 +1,13 @@
 package com.pucgo.edu.treinamais.view;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
 
-import com.pucgo.edu.treinamais.R;
 import com.pucgo.edu.treinamais.databinding.ActivityMainBinding;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
@@ -23,6 +21,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private ActivityMainBinding B;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

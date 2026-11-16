@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pucgo.edu.treinamais.R;
-import com.pucgo.edu.treinamais.model.Aluno;
+import com.pucgo.edu.treinamais.model.Aluno_jv;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
 import com.pucgo.edu.treinamais.network.dto.ProfessorMetricasResponseDto;
 import com.pucgo.edu.treinamais.security.SessionManager;
-import com.pucgo.edu.treinamais.view.PerfilActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -124,11 +123,11 @@ public class PainelProfessorActivity extends AppCompatActivity {
     }
 
     private void carregarAlunos() {
-        ApiClient.getInstance(this).getAuthApiService().getAlunos().enqueue(new Callback<List<Aluno>>() {
+        ApiClient.getInstance(this).getAuthApiService().getAlunos().enqueue(new Callback<List<Aluno_jv>>() {
             @Override
-            public void onResponse(Call<List<Aluno>> call, Response<List<Aluno>> response) {
+            public void onResponse(Call<List<Aluno_jv>> call, Response<List<Aluno_jv>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Aluno> lista = response.body();
+                    List<Aluno_jv> lista = response.body();
                     Log.d(TAG, "Alunos recebidos da API: " + lista.size());
 
                     if (!lista.isEmpty()) {
@@ -154,7 +153,7 @@ public class PainelProfessorActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Aluno>> call, Throwable t) {
+            public void onFailure(Call<List<Aluno_jv>> call, Throwable t) {
                 Log.e(TAG, "Erro de rede ao consultar /api/alunos: " + t.getMessage(), t);
                 tvSemAlunos.setVisibility(View.VISIBLE);
                 recyclerAlunos.setVisibility(View.GONE);

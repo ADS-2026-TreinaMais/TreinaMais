@@ -1,26 +1,35 @@
+//ARQUIVO NO EXCLUDE DO BUILD.GRADLE
+
 package com.pucgo.edu.treinamais.model;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 
 import java.util.Date;
 
-public class Aluno {
-
-    private Long id;
-    private Long usuarioId;
-    private Long professorId;
+@Entity(primaryKeys = {"uid", "aluno_id"})
+public class Aluno_jv {
+    @NonNull
+    @ColumnInfo(name = "uid")
+    private Long uid;
+    @NonNull
+    @ColumnInfo(name = "aluno_id")
+    private Long aluno_id;
+    private String nome;
+    private String email;
     private String cpf;
     private String dataNascimento;
     private String telefone;
     private String criadoEm;
 
-    private String nome;
-    private String email;
-    private String nomeProfessor;
-    private String professorNome;
+    private Long prof_fk;
 
-    public Aluno() {
+    public Aluno_jv() {
     }
 
-    public Aluno(Long usuarioId, Long professorId, String cpf, String dataNascimento, String telefone) {
+    //ARQUIVO NO EXCLUDE DO BUILD.GRADLE
+    public Aluno_jv(Long usuarioId, Long professorId, String cpf, String dataNascimento, String telefone) {
         this.usuarioId = usuarioId;
         this.professorId = professorId;
         this.cpf = cpf;
@@ -28,7 +37,7 @@ public class Aluno {
         this.telefone = telefone;
     }
 
-    public Aluno(Long id, Long usuarioId, Long professorId, String cpf, String dataNascimento, String telefone, String nome, String email) {
+    public Aluno_jv(Long id, Long usuarioId, Long professorId, String cpf, String dataNascimento, String telefone, String nome, String email) {
         this.id = id;
         this.usuarioId = usuarioId;
         this.professorId = professorId;
@@ -37,6 +46,9 @@ public class Aluno {
         this.telefone = telefone;
         this.nome = nome;
         this.email = email;
+    }
+    public Aluno_jv(String nome){
+        this.nome = nome;
     }
 
     public Long getId() {

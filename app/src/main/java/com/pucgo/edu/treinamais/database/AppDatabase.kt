@@ -1,33 +1,39 @@
-package com.pucgo.edu.treinamais.database;
+package com.pucgo.edu.treinamais.database
 
-import android.content.Context;
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.pucgo.edu.treinamais.dao.AlunoDAO
+import com.pucgo.edu.treinamais.dao.ProfessorDAO
+import com.pucgo.edu.treinamais.dao.SessionDao
+import com.pucgo.edu.treinamais.model.entity.Aluno
+import com.pucgo.edu.treinamais.model.entity.ExercTreino
+import com.pucgo.edu.treinamais.model.entity.Professor
+import com.pucgo.edu.treinamais.model.entity.Treino
 
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
+@Database(entities = [Aluno::class, Professor::class, Treino::class, ExercTreino::class], version = 1)
+abstract class AppDatabase: RoomDatabase() {
+    abstract fun alunoDAO(): AlunoDAO
+    abstract fun profDAO(): ProfessorDAO
+    abstract fun sessionDAO(): SessionDao
 
-import com.pucgo.edu.treinamais.dao.SessionDao;
-import com.pucgo.edu.treinamais.model.entity.UserSessionEntity;
+    companion object{
+        @Volatile
+        private var db: AppDatabase? = null;
 
-@Database(entities = {UserSessionEntity.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase extends RoomDatabase {
-
-    private static volatile AppDatabase INSTANCE;
-
-    public abstract SessionDao sessionDao();
-
-    public static AppDatabase getInstance(Context context) {
-        if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            AppDatabase.class,
-                            "treinamais_app.db"
-                    ).fallbackToDestructiveMigration().build();
-                }
+        fun getDB(cx: Context): AppDatabase {
+            return db ?: synchronized(this) {
+                val newDB = Room.databaseBuilder(
+                    cx.applicationContext,
+                    AppDatabase::class.java,
+                    "TMDB"
+                ).build()
+                db = newDB
+                newDB
             }
         }
-        return INSTANCE;
     }
+
+
 }

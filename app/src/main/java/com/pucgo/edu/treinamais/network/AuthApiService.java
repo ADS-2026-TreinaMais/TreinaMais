@@ -1,6 +1,6 @@
 package com.pucgo.edu.treinamais.network;
 
-import com.pucgo.edu.treinamais.model.Aluno;
+import com.pucgo.edu.treinamais.model.Aluno_jv;
 import com.pucgo.edu.treinamais.network.dto.AlunoResponseDto;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.LoginRequestDto;
@@ -37,7 +37,7 @@ public interface AuthApiService {
     Call<Map<String, String>> getCurrentUser();
 
     @GET("api/alunos")
-    Call<List<Aluno>> getAlunos();
+    Call<List<Aluno_jv>> getAlunos();
 
     @GET("api/alunos/me")
     Call<AlunoResponseDto> getMeuPerfilAluno();

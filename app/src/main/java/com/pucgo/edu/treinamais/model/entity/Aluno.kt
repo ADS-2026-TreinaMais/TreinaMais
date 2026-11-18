@@ -9,25 +9,22 @@ import java.sql.Date
 
 @Entity(
     foreignKeys = [ForeignKey(
-        entity = Professor::class,
-        parentColumns = ["profID"],
-        childColumns = ["profFK"],
-        onDelete = ForeignKey.SET_NULL
-    ), ForeignKey(
         entity = Usuario::class,
         parentColumns = ["uid"],
         childColumns = ["usrFK"],
         onDelete = ForeignKey.CASCADE
+    ), ForeignKey(
+        entity = Professor::class,
+        parentColumns = ["profID"],
+        childColumns = ["profFK"],
+        onDelete = ForeignKey.SET_NULL
     )]
 )
 data class Aluno (
     @PrimaryKey val alunoID: Long,
-    val cpf: String,
     val dataNasc: Date,
-    val telefone: String,
     val usrFK: Long,
-    val profFK: Long,
-    val treinoFK: Long
+    val profFK: Long
 )
 data class alunoUsuario (
     @Embedded val usr: Usuario,

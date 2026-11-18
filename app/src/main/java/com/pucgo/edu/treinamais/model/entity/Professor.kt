@@ -5,12 +5,20 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.Relation
+import java.io.FileReader
 
-
+@Entity (
+    foreignKeys = [ForeignKey(
+        entity = Usuario::class,
+        parentColumns = ["uid"],
+        childColumns = ["usrFK"],
+        onDelete = ForeignKey.CASCADE
+    )
+])
 data class Professor (
     @PrimaryKey val profID: Long,
     val cref: String,
-    val usrFK: Long,
+    val usrFK: Long
 )
 
 data class profUsuario (

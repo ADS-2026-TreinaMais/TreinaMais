@@ -16,6 +16,6 @@ interface UsuarioDAO {
     @Delete
     suspend fun delUsr(usr: Usuario)
 
-    @Query ("SELECT * FROM usuario WHERE email = :email")]
+    @Query ("SELECT * FROM usuario WHERE email = :email")
     suspend fun loginUsr(email: String): Usuario
 }

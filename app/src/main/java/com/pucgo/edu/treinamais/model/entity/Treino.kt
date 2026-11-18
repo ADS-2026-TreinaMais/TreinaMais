@@ -54,3 +54,13 @@ data class treinosDoAluno (
         associateBy = Junction(alunoTreino::class)
     ) val treinos: List<Treino>
 )
+
+data class treinosDoProf (
+    @Embedded
+    val prof: Professor,
+    @Relation(
+        parentColumn = "profID",
+        entityColumn = "profFK"
+    )
+    val treinos: List<Treino>
+)

@@ -26,3 +26,9 @@ data class profUsuario (
     @Relation(parentColumn = "uid", entityColumn = "usrFK")
     val professor: Professor
 )
+
+data class alunosProf (
+    @Embedded val prof: Professor,
+    @Relation (parentColumn = "profID", entityColumn = "profFK")
+    val alunos: List<Aluno>
+)

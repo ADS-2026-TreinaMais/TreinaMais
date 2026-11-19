@@ -38,7 +38,10 @@ android {
 }
 
 tasks.withType<JavaCompile> {
-    exclude("**/AlunoDAO_jv.java", "**/Aluno_jv.java", "**/Professor_jv.java")
+    exclude(
+        "**/AlunoDAO_jv.java", "**/Aluno_jv.java", "**/Professor_jv.java", "**/ProfessorDAO_jv",
+        "**/Usuario_jv", "**/AppDatabase_jv"
+    )
 }
 
 dependencies {

@@ -5,14 +5,14 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.pucgo.edu.treinamais.model.entity.Aluno
+import com.pucgo.edu.treinamais.model.Aluno
 import com.pucgo.edu.treinamais.model.entity.Professor
-import com.pucgo.edu.treinamais.model.entity.Usuario
+import com.pucgo.edu.treinamais.model.entity.Usuario_r
 import com.pucgo.edu.treinamais.model.entity.alunoUsuario
 import com.pucgo.edu.treinamais.model.entity.treinosDoAluno
 
 @Dao
-interface AlunoDAO {
+interface AlunoDAO_r {
     @Insert
     suspend fun insert(aluno: Aluno)
 
@@ -26,7 +26,7 @@ interface AlunoDAO {
     //@Query("SELECT * FROM Aluno INNER JOIN Usuario ON Aluno.usrFK = Usuario.uid")
     @Transaction
     @Query("SELECT * FROM aluno")
-    suspend fun selcAlunoDoUsuario(usr: Usuario): alunoUsuario
+    suspend fun selcAlunoDoUsuario(usr: Usuario_r): alunoUsuario
 
     @Transaction
     @Query("SELECT * FROM treino")

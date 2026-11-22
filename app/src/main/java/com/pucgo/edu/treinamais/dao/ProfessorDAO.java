@@ -3,7 +3,7 @@ package com.pucgo.edu.treinamais.dao;
 import android.util.Log;
 
 import com.pucgo.edu.treinamais.model.ConnectionFactory;
-import com.pucgo.edu.treinamais.model.Professor_jv;
+import com.pucgo.edu.treinamais.model.Professor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,11 +13,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfessorDAO_jv {
+public class ProfessorDAO {
 
     private static final String TAG = "ProfessorDAO";
 
-    public boolean inserir(Professor_jv professor, String senhaHash) {
+    public boolean inserir(Professor professor, String senhaHash) {
         String sqlUsuario = "INSERT INTO usuarios (nome, email, senha_hash, tipo, status) VALUES (?, ?, ?, 'PROFESSOR', 'ATIVO')";
         String sqlProfessor = "INSERT INTO professores (usuario_id, cref, telefone) VALUES (?, ?, ?)";
 
@@ -85,7 +85,7 @@ public class ProfessorDAO_jv {
         }
     }
 
-    public boolean atualizar(Professor_jv professor) {
+    public boolean atualizar(Professor professor) {
         String sqlProf = "UPDATE professores SET cref = ?, telefone = ? WHERE id = ?";
         String sqlUser = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";
 
@@ -138,7 +138,7 @@ public class ProfessorDAO_jv {
         }
     }
 
-    public Professor_jv buscarPorId(Long id) {
+    public Professor buscarPorId(Long id) {
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
                      "JOIN usuarios u ON p.usuario_id = u.id " +
@@ -160,7 +160,7 @@ public class ProfessorDAO_jv {
         return null;
     }
 
-    public Professor_jv buscarPorUsuarioId(Long usuarioId) {
+    public Professor buscarPorUsuarioId(Long usuarioId) {
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
                      "JOIN usuarios u ON p.usuario_id = u.id " +
@@ -182,7 +182,7 @@ public class ProfessorDAO_jv {
         return null;
     }
 
-    public Professor_jv buscarPorCref(String cref) {
+    public Professor buscarPorCref(String cref) {
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
                      "JOIN usuarios u ON p.usuario_id = u.id " +
@@ -204,7 +204,7 @@ public class ProfessorDAO_jv {
         return null;
     }
 
-    public Professor_jv buscarPorEmail(String email) {
+    public Professor buscarPorEmail(String email) {
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
                      "JOIN usuarios u ON p.usuario_id = u.id " +
@@ -226,8 +226,8 @@ public class ProfessorDAO_jv {
         return null;
     }
 
-    public List<Professor_jv> listarTodos() {
-        List<Professor_jv> lista = new ArrayList<>();
+    public List<Professor> listarTodos() {
+        List<Professor> lista = new ArrayList<>();
         String sql = "SELECT p.id, p.usuario_id, p.cref, p.telefone, p.criado_em, u.nome, u.email " +
                      "FROM professores p " +
                      "JOIN usuarios u ON p.usuario_id = u.id " +
@@ -265,8 +265,8 @@ public class ProfessorDAO_jv {
         return false;
     }
 
-    private Professor_jv mapearProfessor(ResultSet rs) throws SQLException {
-        Professor_jv prof = new Professor_jv();
+    private Professor mapearProfessor(ResultSet rs) throws SQLException {
+        Professor prof = new Professor();
         prof.setId(rs.getLong("id"));
         prof.setUsuarioId(rs.getLong("usuario_id"));
         prof.setCref(rs.getString("cref"));

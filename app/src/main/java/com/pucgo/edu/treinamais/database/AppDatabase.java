@@ -10,19 +10,19 @@ import com.pucgo.edu.treinamais.dao.SessionDao;
 import com.pucgo.edu.treinamais.model.entity.UserSessionEntity;
 
 @Database(entities = {UserSessionEntity.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase_jv extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase {
 
-    private static volatile AppDatabase_jv INSTANCE;
+    private static volatile AppDatabase INSTANCE;
 
-    public abstract SessionDao sessionDao();
+    public abstract SessionDao sessionDAO();
 
-    public static AppDatabase_jv getInstance(Context context) {
+    public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            synchronized (AppDatabase_jv.class) {
+            synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(
                             context.getApplicationContext(),
-                            AppDatabase_jv.class,
+                            AppDatabase.class,
                             "treinamais_app.db"
                     ).fallbackToDestructiveMigration().build();
                 }

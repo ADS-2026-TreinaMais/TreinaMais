@@ -1,13 +1,11 @@
 package com.pucgo.edu.treinamais.model.entity
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 
 @Entity(indices = [Index(value = ["email"], unique = true)])
-data class Usuario (
+data class Usuario_r (
     @PrimaryKey val uid: Long,
     val cpf: String,
     val nome: String,

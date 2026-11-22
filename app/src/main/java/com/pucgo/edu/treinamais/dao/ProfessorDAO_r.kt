@@ -6,12 +6,11 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import com.pucgo.edu.treinamais.model.entity.Professor
-import com.pucgo.edu.treinamais.model.entity.Usuario
 import com.pucgo.edu.treinamais.model.entity.alunosProf
 import com.pucgo.edu.treinamais.model.entity.profUsuario
 
 @Dao
-interface ProfessorDAO {
+interface ProfessorDAO_r {
     @Insert
     suspend fun inserirProf(prof: Professor)
 

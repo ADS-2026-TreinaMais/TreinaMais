@@ -30,7 +30,7 @@ data class Treino (
     primaryKeys = ["alunoFK", "trFK"],
     indices = [Index("alunoFK", "trFK")],
     foreignKeys = [ForeignKey(
-        entity = Aluno::class,
+        entity = Aluno_r::class,
         parentColumns = ["alunoID"],
         childColumns = ["alunoFK"],
         onDelete = ForeignKey.CASCADE
@@ -47,7 +47,7 @@ data class alunoTreino (
 
 data class treinosDoAluno (
     @Embedded
-    val aluno: Aluno,
+    val aluno: Aluno_r,
     @Relation(
         parentColumn = "alunoID",
         entityColumn = "tID",

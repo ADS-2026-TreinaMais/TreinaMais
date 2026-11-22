@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.SET_NULL
     )]
 )
-data class ExercTreino(
+data class ExercTreino_r(
     @PrimaryKey
     val exID: Long,
     val nomeex: String,

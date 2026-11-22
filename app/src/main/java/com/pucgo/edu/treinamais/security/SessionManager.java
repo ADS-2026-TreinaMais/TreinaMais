@@ -7,7 +7,7 @@ import android.util.Log;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
-import com.pucgo.edu.treinamais.database.AppDatabase_jv;
+import com.pucgo.edu.treinamais.database.AppDatabase;
 import com.pucgo.edu.treinamais.model.entity.UserSessionEntity;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 
@@ -29,7 +29,7 @@ public class SessionManager {
     private static volatile SessionManager instance;
 
     private final SharedPreferences preferences;
-    private final AppDatabase_jv database;
+    private final AppDatabase database;
     private final ExecutorService executorService;
     private SessionListener sessionListener;
 
@@ -72,9 +72,7 @@ public class SessionManager {
         }
     }
 
-    public void setSessionListener(SessionListener listener) {
-        this.sessionListener = listener;
-    }
+    public void setSessionListener(SessionListener listener) {this.sessionListener = listener;}
 
     public synchronized void saveSession(AuthResponseDto authResponse) {
         if (authResponse == null || authResponse.getToken() == null) {
@@ -107,8 +105,8 @@ public class SessionManager {
 
         executorService.execute(() -> {
             try {
-                database.sessionDao().clearAll();
-                database.sessionDao().insert(entity);
+                database.sessionDAO().clearAll();
+                database.sessionDAO().insert(entity);
                 Log.d(TAG, "Sessão persistida no Room com sucesso para o usuário: " + entity.getEmail());
             } catch (Exception e) {
                 Log.e(TAG, "Erro ao persistir sessão no Room", e);
@@ -160,7 +158,7 @@ public class SessionManager {
 
         executorService.execute(() -> {
             try {
-                database.sessionDao().clearAll();
+                database.sessionDAO().clearAll();
                 Log.d(TAG, "Cache de sessão limpo no Room.");
             } catch (Exception e) {
                 Log.e(TAG, "Erro ao limpar cache de sessão no Room", e);

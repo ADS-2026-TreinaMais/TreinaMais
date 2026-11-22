@@ -1,4 +1,5 @@
 import jdk.jfr.internal.JVM
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.android.application)
@@ -39,9 +40,12 @@ android {
 
 tasks.withType<JavaCompile> {
     exclude(
-        "**/AlunoDAO_jv.java", "**/Aluno_jv.java", "**/Professor_jv.java", "**/ProfessorDAO_jv",
-        "**/Usuario_jv", "**/AppDatabase_jv"
+        "**/AlunoDAO_jv.java", "**/Professor_jv.java", "**/ProfessorDAO_jv.java",
+        "**/Usuario_jv.java"
     )
+}
+tasks.withType<KotlinCompile> {
+    exclude("**/*.kt")
 }
 
 dependencies {

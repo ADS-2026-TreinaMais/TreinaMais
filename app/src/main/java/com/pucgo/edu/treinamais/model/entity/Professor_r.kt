@@ -5,11 +5,10 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.Relation
-import java.io.FileReader
 
 @Entity (
     foreignKeys = [ForeignKey(
-        entity = Usuario::class,
+        entity = Usuario_r::class,
         parentColumns = ["uid"],
         childColumns = ["usrFK"],
         onDelete = ForeignKey.CASCADE
@@ -22,7 +21,7 @@ data class Professor (
 )
 
 data class profUsuario (
-    @Embedded val usr: Usuario,
+    @Embedded val usr: Usuario_r,
     @Relation(parentColumn = "uid", entityColumn = "usrFK")
     val professor: Professor
 )
@@ -30,5 +29,5 @@ data class profUsuario (
 data class alunosProf (
     @Embedded val prof: Professor,
     @Relation (parentColumn = "profID", entityColumn = "profFK")
-    val alunos: List<Aluno>
+    val alunos: List<Aluno_r>
 )

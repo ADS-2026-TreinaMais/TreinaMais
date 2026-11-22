@@ -14,15 +14,15 @@ public interface SessionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(UserSessionEntity session);
 
-    @Query("SELECT * FROM user_sessions LIMIT 1")
+    @Query("SELECT * FROM UserSessionEntity LIMIT 1")
     UserSessionEntity getActiveSession();
 
-    @Query("SELECT * FROM user_sessions WHERE user_id = :userId LIMIT 1")
+    @Query("SELECT * FROM UserSessionEntity WHERE user_id = :userId LIMIT 1")
     UserSessionEntity getSessionByUserId(Long userId);
 
     @Update
     void update(UserSessionEntity session);
 
-    @Query("DELETE FROM user_sessions")
+    @Query("DELETE FROM UserSessionEntity")
     void clearAll();
 }

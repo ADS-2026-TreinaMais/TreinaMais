@@ -9,7 +9,7 @@ import androidx.room.Entity;
 import java.util.Date;
 
 @Entity(primaryKeys = {"uid", "aluno_id"})
-public class Aluno_jv {
+public class Aluno {
     @NonNull
     @ColumnInfo(name = "uid")
     private Long uid;
@@ -25,76 +25,65 @@ public class Aluno_jv {
 
     private Long prof_fk;
 
-    public Aluno_jv() {
+    public Aluno() {
     }
 
-    //ARQUIVO NO EXCLUDE DO BUILD.GRADLE
-    public Aluno_jv(Long usuarioId, Long professorId, String cpf, String dataNascimento, String telefone) {
-        this.usuarioId = usuarioId;
-        this.professorId = professorId;
+    public Aluno(Long usuarioId, Long professorId, String cpf, String dataNascimento, String telefone) {
+        this.uid = usuarioId;
+        this.prof_fk = professorId;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.telefone = telefone;
     }
 
-    public Aluno_jv(Long id, Long usuarioId, Long professorId, String cpf, String dataNascimento, String telefone, String nome, String email) {
-        this.id = id;
-        this.usuarioId = usuarioId;
-        this.professorId = professorId;
+    public Aluno(@NonNull Long id, Long usuarioId, Long professorId, String cpf, String dataNascimento, String telefone, String nome, String email) {
+        this.aluno_id = id;
+        this.uid = usuarioId;
+        this.prof_fk = professorId;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.telefone = telefone;
         this.nome = nome;
         this.email = email;
     }
-    public Aluno_jv(String nome){
+    public Aluno(String nome){
         this.nome = nome;
     }
 
     public Long getId() {
-        return id;
+        return aluno_id;
     }
-
     public void setId(Long id) {
-        this.id = id;
+        this.aluno_id = id;
     }
 
     public Long getUsuarioId() {
-        return usuarioId;
+        return uid;
     }
-
     public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+        this.uid = usuarioId;
     }
 
     public Long getProfessorId() {
-        return professorId;
+        return prof_fk;
     }
-
     public void setProfessorId(Long professorId) {
-        this.professorId = professorId;
+        this.prof_fk = professorId;
     }
 
     public String getCpf() {
         return cpf;
     }
-
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    public String getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
+    public String getDataNascimento() {return dataNascimento;}
+    public void setDataNascimento(String dataNascimento) {this.dataNascimento = dataNascimento;}
 
     public String getTelefone() {
         return telefone;
     }
-
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
@@ -102,11 +91,9 @@ public class Aluno_jv {
     public String getCriadoEm() {
         return criadoEm;
     }
-
     public void setCriadoEm(String criadoEm) {
         this.criadoEm = criadoEm;
     }
-
     public void setCriadoEm(Date criadoEm) {
         this.criadoEm = criadoEm != null ? criadoEm.toString() : null;
     }
@@ -114,7 +101,6 @@ public class Aluno_jv {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -122,36 +108,35 @@ public class Aluno_jv {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getNomeProfessor() {
-        return nomeProfessor != null ? nomeProfessor : professorNome;
-    }
+//    public String getNomeProfessor() {
+//        return nomeProfessor != null ? nomeProfessor : professorNome;
+//    }
 
-    public void setNomeProfessor(String nomeProfessor) {
-        this.nomeProfessor = nomeProfessor;
-    }
-
-    public String getProfessorNome() {
-        return getNomeProfessor();
-    }
-
-    public void setProfessorNome(String professorNome) {
-        this.professorNome = professorNome;
-        if (this.nomeProfessor == null) {
-            this.nomeProfessor = professorNome;
-        }
-    }
+//    public void setNomeProfessor(String nomeProfessor) {
+//        this.nomeProfessor = nomeProfessor;
+//    }
+//
+//    public String getProfessorNome() {
+//        return getNomeProfessor();
+//    }
+//
+//    public void setProfessorNome(String professorNome) {
+//        this.professorNome = professorNome;
+//        if (this.nomeProfessor == null) {
+//            this.nomeProfessor = professorNome;
+//        }
+//    }
 
     @Override
     public String toString() {
         return "Aluno{" +
-                "id=" + id +
-                ", usuarioId=" + usuarioId +
-                ", professorId=" + professorId +
+                "id=" + aluno_id +
+                ", usuarioId=" + uid +
+                ", professorId=" + prof_fk +
                 ", cpf='" + cpf + '\'' +
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +

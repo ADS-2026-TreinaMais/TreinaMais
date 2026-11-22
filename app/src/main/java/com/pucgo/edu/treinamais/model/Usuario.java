@@ -2,7 +2,7 @@ package com.pucgo.edu.treinamais.model;
 
 import java.util.Date;
 
-public class Usuario_jv {
+public class Usuario {
 
     private Long id;
     private String nome;
@@ -13,11 +13,11 @@ public class Usuario_jv {
     private Date criadoEm;
     private Date atualizadoEm;
 
-    public Usuario_jv() {
+    public Usuario() {
         this.status = "ATIVO";
     }
 
-    public Usuario_jv(String nome, String email, String senha, String tipo) {
+    public Usuario(String nome, String email, String senha, String tipo) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -25,7 +25,7 @@ public class Usuario_jv {
         this.status = "ATIVO";
     }
 
-    public Usuario_jv(Long id, String nome, String email, String senha, String tipo, String status) {
+    public Usuario(Long id, String nome, String email, String senha, String tipo, String status) {
         this.id = id;
         this.nome = nome;
         this.email = email;

@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.pucgo.edu.treinamais"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.pucgo.edu.treinamais"

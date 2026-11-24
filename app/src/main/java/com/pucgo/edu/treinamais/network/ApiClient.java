@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.pucgo.edu.treinamais.security.SessionManager;
+import com.pucgo.edu.treinamais.util.DeviceUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -25,22 +26,7 @@ public class ApiClient {
     public static final String DEVICE_BASE_URL = "http://127.0.0.1:8081/";
 
     public static boolean isEmulator() {
-        return (android.os.Build.BRAND.startsWith("generic") && android.os.Build.DEVICE.startsWith("generic"))
-                || android.os.Build.FINGERPRINT.startsWith("generic")
-                || android.os.Build.FINGERPRINT.startsWith("unknown")
-                || android.os.Build.HARDWARE.contains("goldfish")
-                || android.os.Build.HARDWARE.contains("ranchu")
-                || android.os.Build.MODEL.contains("google_sdk")
-                || android.os.Build.MODEL.contains("Emulator")
-                || android.os.Build.MODEL.contains("Android SDK built for x86")
-                || android.os.Build.MANUFACTURER.contains("Genymotion")
-                || android.os.Build.PRODUCT.contains("sdk_google")
-                || android.os.Build.PRODUCT.contains("google_sdk")
-                || android.os.Build.PRODUCT.contains("sdk")
-                || android.os.Build.PRODUCT.contains("sdk_x86")
-                || android.os.Build.PRODUCT.contains("vbox86p")
-                || android.os.Build.PRODUCT.contains("emulator")
-                || android.os.Build.PRODUCT.contains("simulator");
+        return DeviceUtils.isEmulator();
     }
 
     public static String getBaseUrl(Context context) {

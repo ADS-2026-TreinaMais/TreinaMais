@@ -61,7 +61,10 @@ CREATE TABLE IF NOT EXISTS exercicios_treino (
     carga VARCHAR(30),
     descanso_segundos INT DEFAULT 60,
     ordem INT NOT NULL DEFAULT 1,
-    observacoes TEXT
+    observacoes TEXT,
+    exercicio_externo_id VARCHAR(50),
+    gif_url VARCHAR(500),
+    instrucoes TEXT
 );
 
 -- 7. TABELA DE ASSOCIAÇÃO ALUNO_TREINO (Vínculo de fichas com alunos)
@@ -72,6 +75,20 @@ CREATE TABLE IF NOT EXISTS alunos_treino (
     data_inicio DATE NOT NULL DEFAULT CURRENT_DATE,
     data_fim DATE,
     ativo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- 8. TABELA DE CATÁLOGO DE EXERCÍCIOS (Cache persistente da ExerciseDB V1)
+CREATE TABLE IF NOT EXISTS catalogo_exercicios (
+    id BIGSERIAL PRIMARY KEY,
+    external_id VARCHAR(50) UNIQUE NOT NULL,
+    nome VARCHAR(150) NOT NULL,
+    gif_url VARCHAR(500),
+    body_parts TEXT,
+    equipments TEXT,
+    target_muscles TEXT,
+    secondary_muscles TEXT,
+    instrucoes TEXT,
+    atualizado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Índices para melhoria de desempenho
@@ -85,3 +102,5 @@ CREATE INDEX IF NOT EXISTS idx_treinos_professor_id ON treinos(professor_id);
 CREATE INDEX IF NOT EXISTS idx_exercicios_treino_id ON exercicios_treino(treino_id);
 CREATE INDEX IF NOT EXISTS idx_alunos_treino_aluno ON alunos_treino(aluno_id);
 CREATE INDEX IF NOT EXISTS idx_alunos_treino_treino ON alunos_treino(treino_id);
+CREATE INDEX IF NOT EXISTS idx_catalogo_exercicios_external_id ON catalogo_exercicios(external_id);
+CREATE INDEX IF NOT EXISTS idx_catalogo_exercicios_nome ON catalogo_exercicios(nome);

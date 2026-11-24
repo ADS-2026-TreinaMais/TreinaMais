@@ -47,17 +47,7 @@ public class TreinoService {
         Treino treino = new Treino(professor, request.getNome(), request.getDescricao(), request.getObjetivo());
 
         for (ExercicioRequest exReq : request.getExercicios()) {
-            ExercicioTreino ex = new ExercicioTreino(
-                    treino,
-                    exReq.getNomeExercicio(),
-                    exReq.getSeries(),
-                    exReq.getRepeticoes(),
-                    exReq.getCarga(),
-                    exReq.getDescansoSegundos(),
-                    exReq.getOrdem()
-            );
-            ex.setObservacoes(exReq.getObservacoes());
-            treino.adicionarExercicio(ex);
+            treino.adicionarExercicio(criarExercicioTreino(treino, exReq));
         }
 
         Treino salvo = treinoRepository.save(treino);
@@ -142,17 +132,7 @@ public class TreinoService {
 
         treino.getExercicios().clear();
         for (ExercicioRequest exReq : request.getExercicios()) {
-            ExercicioTreino ex = new ExercicioTreino(
-                    treino,
-                    exReq.getNomeExercicio(),
-                    exReq.getSeries(),
-                    exReq.getRepeticoes(),
-                    exReq.getCarga(),
-                    exReq.getDescansoSegundos(),
-                    exReq.getOrdem()
-            );
-            ex.setObservacoes(exReq.getObservacoes());
-            treino.adicionarExercicio(ex);
+            treino.adicionarExercicio(criarExercicioTreino(treino, exReq));
         }
 
         Treino atualizado = treinoRepository.save(treino);
@@ -229,18 +209,41 @@ public class TreinoService {
         }
     }
 
+    private ExercicioTreino criarExercicioTreino(Treino treino, ExercicioRequest exReq) {
+        ExercicioTreino ex = new ExercicioTreino(
+                treino,
+                exReq.getNomeExercicio(),
+                exReq.getSeries(),
+                exReq.getRepeticoes(),
+                exReq.getCarga(),
+                exReq.getDescansoSegundos(),
+                exReq.getOrdem()
+        );
+        ex.setObservacoes(exReq.getObservacoes());
+        ex.setExercicioExternoId(exReq.getExercicioExternoId());
+        ex.setGifUrl(exReq.getGifUrl());
+        ex.setInstrucoes(exReq.getInstrucoes());
+        return ex;
+    }
+
     private TreinoResponse converterParaResponse(Treino treino) {
         List<ExercicioResponse> exerciciosResp = treino.getExercicios().stream()
-                .map(e -> new ExercicioResponse(
-                        e.getId(),
-                        e.getNomeExercicio(),
-                        e.getSeries(),
-                        e.getRepeticoes(),
-                        e.getCarga(),
-                        e.getDescansoSegundos(),
-                        e.getOrdem(),
-                        e.getObservacoes()
-                ))
+                .map(e -> {
+                    ExercicioResponse resp = new ExercicioResponse(
+                            e.getId(),
+                            e.getNomeExercicio(),
+                            e.getSeries(),
+                            e.getRepeticoes(),
+                            e.getCarga(),
+                            e.getDescansoSegundos(),
+                            e.getOrdem(),
+                            e.getObservacoes()
+                    );
+                    resp.setExercicioExternoId(e.getExercicioExternoId());
+                    resp.setGifUrl(e.getGifUrl());
+                    resp.setInstrucoes(e.getInstrucoes());
+                    return resp;
+                })
                 .collect(Collectors.toList());
 
         List<Long> alunosIds = alunoTreinoRepository.findByTreinoId(treino.getId()).stream()

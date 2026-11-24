@@ -16,7 +16,7 @@ public class DaoTest {
     @Test
     public void testConnectionFactoryConfiguracao() {
         assertNotNull(ConnectionFactory.getInst());
-        assertEquals("10.0.2.2", ConnectionFactory.getIp());
+        assertEquals("127.0.0.1", ConnectionFactory.getIp());
         assertEquals("5432", ConnectionFactory.getPorta());
         assertEquals("treinamais", ConnectionFactory.getDbNome());
         assertEquals("postgres", ConnectionFactory.getUsuario());
@@ -25,7 +25,8 @@ public class DaoTest {
         assertEquals("192.168.1.50", ConnectionFactory.getIp());
         assertEquals("5433", ConnectionFactory.getPorta());
 
-        ConnectionFactory.configurar("10.0.2.2", "5432", "treinamais", "postgres", "postgres");
+        ConnectionFactory.configurar(null, "5432", "treinamais", "postgres", "postgres");
+        assertEquals("127.0.0.1", ConnectionFactory.getIp());
     }
 
     @Test

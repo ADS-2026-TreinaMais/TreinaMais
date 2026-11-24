@@ -1,18 +1,13 @@
+
 package com.pucgo.edu.treinamais.view;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.pucgo.edu.treinamais.R;
+import com.pucgo.edu.treinamais.databinding.CadastroBinding;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
 import com.pucgo.edu.treinamais.network.dto.RegisterRequestDto;
@@ -23,57 +18,30 @@ import retrofit2.Response;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    private MaterialButton btnTipoAluno;
-    private MaterialButton btnTipoProfessor;
-    private TextInputEditText editNome;
-    private TextInputEditText editEmail;
-    private TextInputEditText editSenha;
-    private TextInputEditText editCref;
-    private TextInputEditText editCpf;
-    private TextInputEditText editTelefone;
-    private TextInputLayout crefInputLayout;
-    private TextInputLayout cpfInputLayout;
-    private ProgressBar progressBar;
-    private Button btnCadastrar;
-    private TextView tvVoltarLogin;
+    private CadastroBinding binding;
 
     private String tipoSelecionado = "ALUNO";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastro);
 
-        inicializarViews();
+        binding = CadastroBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         configurarSelecaoTipo();
         configurarListeners();
-    }
-
-    private void inicializarViews() {
-        btnTipoAluno = findViewById(R.id.btnTipoAluno);
-        btnTipoProfessor = findViewById(R.id.btnTipoProfessor);
-        editNome = findViewById(R.id.editNome);
-        editEmail = findViewById(R.id.editEmail);
-        editSenha = findViewById(R.id.editSenha);
-        editCref = findViewById(R.id.editCref);
-        editCpf = findViewById(R.id.editCpf);
-        editTelefone = findViewById(R.id.editTelefone);
-        crefInputLayout = findViewById(R.id.crefInputLayout);
-        cpfInputLayout = findViewById(R.id.cpfInputLayout);
-        progressBar = findViewById(R.id.progressBarCadastro);
-        btnCadastrar = findViewById(R.id.btnCadastrar);
-        tvVoltarLogin = findViewById(R.id.tvVoltarLogin);
     }
 
     private void configurarSelecaoTipo() {
         atualizarBotoesTipo();
 
-        btnTipoAluno.setOnClickListener(v -> {
+        binding.btnTipoAluno.setOnClickListener(v -> {
             tipoSelecionado = "ALUNO";
             atualizarBotoesTipo();
         });
 
-        btnTipoProfessor.setOnClickListener(v -> {
+        binding.btnTipoProfessor.setOnClickListener(v -> {
             tipoSelecionado = "PROFESSOR";
             atualizarBotoesTipo();
         });
@@ -81,56 +49,65 @@ public class CadastroActivity extends AppCompatActivity {
 
     private void atualizarBotoesTipo() {
         if ("PROFESSOR".equals(tipoSelecionado)) {
-            crefInputLayout.setVisibility(View.VISIBLE);
-            cpfInputLayout.setVisibility(View.GONE);
-//            btnTipoProfessor.setAlpha(1.0f);
-//            btnTipoAluno.setAlpha(0.5f);
-            btnTipoAluno.setChecked(false);
-            btnTipoProfessor.setChecked(true);
+            binding.crefInputLayout.setVisibility(View.VISIBLE);
+            binding.cpfInputLayout.setVisibility(View.GONE);
+
+            binding.btnTipoAluno.setChecked(false);
+            binding.btnTipoProfessor.setChecked(true);
         } else {
-            crefInputLayout.setVisibility(View.GONE);
-            cpfInputLayout.setVisibility(View.VISIBLE);
-//            btnTipoAluno.setAlpha(1.0f);
-//            btnTipoProfessor.setAlpha(0.5f);
-            btnTipoProfessor.setChecked(false);
-            btnTipoAluno.setChecked(true);
+            binding.crefInputLayout.setVisibility(View.GONE);
+            binding.cpfInputLayout.setVisibility(View.VISIBLE);
+
+            binding.btnTipoProfessor.setChecked(false);
+            binding.btnTipoAluno.setChecked(true);
         }
     }
 
     private void configurarListeners() {
-        btnCadastrar.setOnClickListener(v -> realizarCadastro());
-        tvVoltarLogin.setOnClickListener(v -> finish());
+        binding.btnCadastrar.setOnClickListener(v -> realizarCadastro());
+        binding.tvVoltarLogin.setOnClickListener(v -> finish());
     }
 
     private void realizarCadastro() {
-        String nome = editNome.getText() != null ? editNome.getText().toString().trim() : "";
-        String email = editEmail.getText() != null ? editEmail.getText().toString().trim() : "";
-        String senha = editSenha.getText() != null ? editSenha.getText().toString().trim() : "";
-        String cref = editCref.getText() != null ? editCref.getText().toString().trim() : null;
-        String cpf = editCpf.getText() != null ? editCpf.getText().toString().trim() : null;
-        String telefone = editTelefone.getText() != null ? editTelefone.getText().toString().trim() : null;
+        String nome = binding.editNome.getText() != null
+                ? binding.editNome.getText().toString().trim() : "";
+
+        String email = binding.editEmail.getText() != null
+                ? binding.editEmail.getText().toString().trim() : "";
+
+        String senha = binding.editSenha.getText() != null
+                ? binding.editSenha.getText().toString().trim() : "";
+
+        String cref = binding.editCref.getText() != null
+                ? binding.editCref.getText().toString().trim() : null;
+
+        String cpf = binding.editCpf.getText() != null
+                ? binding.editCpf.getText().toString().trim() : null;
+
+        String telefone = binding.editTelefone.getText() != null
+                ? binding.editTelefone.getText().toString().trim() : null;
 
         if (nome.isEmpty()) {
-            editNome.setError("Informe seu nome completo");
-            editNome.requestFocus();
+            binding.editNome.setError("Informe seu nome completo");
+            binding.editNome.requestFocus();
             return;
         }
 
         if (email.isEmpty()) {
-            editEmail.setError("Informe seu e-mail");
-            editEmail.requestFocus();
+            binding.editEmail.setError("Informe seu e-mail");
+            binding.editEmail.requestFocus();
             return;
         }
 
         if (senha.length() < 6) {
-            editSenha.setError("A senha deve ter no mínimo 6 caracteres");
-            editSenha.requestFocus();
+            binding.editSenha.setError("A senha deve ter no mínimo 6 caracteres");
+            binding.editSenha.requestFocus();
             return;
         }
 
         if ("PROFESSOR".equals(tipoSelecionado) && (cref == null || cref.isEmpty())) {
-            editCref.setError("O CREF é obrigatório para cadastro de professor");
-            editCref.requestFocus();
+            binding.editCref.setError("O CREF é obrigatório para cadastro de professor");
+            binding.editCref.requestFocus();
             return;
         }
 
@@ -146,39 +123,60 @@ public class CadastroActivity extends AppCompatActivity {
                 telefone
         );
 
-        ApiClient.getInstance(this).getAuthApiService().register(request).enqueue(new Callback<MessageResponseDto>() {
-            @Override
-            public void onResponse(Call<MessageResponseDto> call, Response<MessageResponseDto> response) {
-                setCarregando(false);
-                if (response.isSuccessful()) {
-                    Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso! Faça login.", Toast.LENGTH_LONG).show();
-                    finish();
-                } else {
-                    String erro = "Erro ao cadastrar usuário.";
-                    try {
-                        if (response.errorBody() != null) {
-                            erro = response.errorBody().string();
-                        }
-                    } catch (Exception ignored) {
-                    }
-                    Toast.makeText(CadastroActivity.this, erro, Toast.LENGTH_LONG).show();
-                }
-            }
+        ApiClient.getInstance(this)
+                .getAuthApiService()
+                .register(request)
+                .enqueue(new Callback<MessageResponseDto>() {
 
-            @Override
-            public void onFailure(Call<MessageResponseDto> call, Throwable t) {
-                setCarregando(false);
-                Toast.makeText(CadastroActivity.this, "Falha de rede: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+                    @Override
+                    public void onResponse(Call<MessageResponseDto> call,
+                                           Response<MessageResponseDto> response) {
+                        setCarregando(false);
+
+                        if (response.isSuccessful()) {
+                            Toast.makeText(
+                                    CadastroActivity.this,
+                                    "Cadastro realizado com sucesso! Faça login.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                            finish();
+                        } else {
+                            String erro = "Erro ao cadastrar usuário.";
+
+                            try {
+                                if (response.errorBody() != null) {
+                                    erro = response.errorBody().string();
+                                }
+                            } catch (Exception ignored) {
+                            }
+
+                            Toast.makeText(
+                                    CadastroActivity.this,
+                                    erro,
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MessageResponseDto> call, Throwable t) {
+                        setCarregando(false);
+
+                        Toast.makeText(
+                                CadastroActivity.this,
+                                "Falha de rede: " + t.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                });
     }
 
     private void setCarregando(boolean carregando) {
-        if (progressBar != null) {
-            progressBar.setVisibility(carregando ? View.VISIBLE : View.GONE);
-        }
-        if (btnCadastrar != null) {
-            btnCadastrar.setEnabled(!carregando);
-        }
+        binding.progressBarCadastro.setVisibility(
+                carregando ? View.VISIBLE : View.GONE
+        );
+
+        binding.btnCadastrar.setEnabled(!carregando);
     }
 }

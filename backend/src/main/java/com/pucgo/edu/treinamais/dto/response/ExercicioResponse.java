@@ -10,6 +10,9 @@ public class ExercicioResponse {
     private Integer descansoSegundos;
     private Integer ordem;
     private String observacoes;
+    private String exercicioExternoId;
+    private String gifUrl;
+    private String instrucoes;
 
     public ExercicioResponse() {
     }
@@ -87,5 +90,29 @@ public class ExercicioResponse {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public String getExercicioExternoId() {
+        return exercicioExternoId;
+    }
+
+    public void setExercicioExternoId(String exercicioExternoId) {
+        this.exercicioExternoId = exercicioExternoId;
+    }
+
+    public String getGifUrl() {
+        return gifUrl;
+    }
+
+    public void setGifUrl(String gifUrl) {
+        this.gifUrl = gifUrl;
+    }
+
+    public String getInstrucoes() {
+        return instrucoes;
+    }
+
+    public void setInstrucoes(String instrucoes) {
+        this.instrucoes = instrucoes;
     }
 }

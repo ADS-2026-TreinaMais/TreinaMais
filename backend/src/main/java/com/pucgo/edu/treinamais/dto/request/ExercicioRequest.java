@@ -23,6 +23,9 @@ public class ExercicioRequest {
     private Integer ordem = 1;
 
     private String observacoes;
+    private String exercicioExternoId;
+    private String gifUrl;
+    private String instrucoes;
 
     public ExercicioRequest() {
     }
@@ -91,5 +94,29 @@ public class ExercicioRequest {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public String getExercicioExternoId() {
+        return exercicioExternoId;
+    }
+
+    public void setExercicioExternoId(String exercicioExternoId) {
+        this.exercicioExternoId = exercicioExternoId;
+    }
+
+    public String getGifUrl() {
+        return gifUrl;
+    }
+
+    public void setGifUrl(String gifUrl) {
+        this.gifUrl = gifUrl;
+    }
+
+    public String getInstrucoes() {
+        return instrucoes;
+    }
+
+    public void setInstrucoes(String instrucoes) {
+        this.instrucoes = instrucoes;
     }
 }

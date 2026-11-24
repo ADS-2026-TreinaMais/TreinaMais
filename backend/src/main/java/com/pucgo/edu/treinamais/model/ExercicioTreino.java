@@ -39,6 +39,15 @@ public class ExercicioTreino {
     @Column(columnDefinition = "TEXT")
     private String observacoes;
 
+    @Column(name = "exercicio_externo_id", length = 50)
+    private String exercicioExternoId;
+
+    @Column(name = "gif_url", length = 500)
+    private String gifUrl;
+
+    @Column(columnDefinition = "TEXT")
+    private String instrucoes;
+
     public ExercicioTreino() {
     }
 
@@ -122,5 +131,29 @@ public class ExercicioTreino {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public String getExercicioExternoId() {
+        return exercicioExternoId;
+    }
+
+    public void setExercicioExternoId(String exercicioExternoId) {
+        this.exercicioExternoId = exercicioExternoId;
+    }
+
+    public String getGifUrl() {
+        return gifUrl;
+    }
+
+    public void setGifUrl(String gifUrl) {
+        this.gifUrl = gifUrl;
+    }
+
+    public String getInstrucoes() {
+        return instrucoes;
+    }
+
+    public void setInstrucoes(String instrucoes) {
+        this.instrucoes = instrucoes;
     }
 }

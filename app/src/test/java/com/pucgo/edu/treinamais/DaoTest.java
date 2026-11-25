@@ -2,10 +2,10 @@ package com.pucgo.edu.treinamais;
 
 import com.pucgo.edu.treinamais.dao.AlunoDAO_jv;
 import com.pucgo.edu.treinamais.dao.ProfessorDAO_jv;
-import com.pucgo.edu.treinamais.model.Aluno_jv;
+import com.pucgo.edu.treinamais.model.Aluno;
 import com.pucgo.edu.treinamais.model.ConnectionFactory;
-import com.pucgo.edu.treinamais.model.Professor_jv;
-import com.pucgo.edu.treinamais.model.Usuario_jv;
+import com.pucgo.edu.treinamais.model.Professor;
+import com.pucgo.edu.treinamais.model.Usuario;
 
 import org.junit.Test;
 
@@ -40,7 +40,7 @@ public class DaoTest {
 
     @Test
     public void testModelProfessor() {
-        Professor_jv prof = new Professor_jv(1L, 10L, "123456-G/GO", "(62) 99999-1111", "Prof. Silva", "silva@treinamais.com");
+        Professor prof = new Professor(1L, 10L, "123456-G/GO", "(62) 99999-1111", "Prof. Silva", "silva@treinamais.com");
         assertEquals(Long.valueOf(1L), prof.getId());
         assertEquals(Long.valueOf(10L), prof.getUsuarioId());
         assertEquals("123456-G/GO", prof.getCref());
@@ -52,7 +52,7 @@ public class DaoTest {
 
     @Test
     public void testModelAluno() {
-        Aluno_jv aluno = new Aluno_jv(2L, 20L, 1L, "111.222.333-44", "2000-05-15", "(62) 98888-2222", "Aluno João", "joao@treinamais.com");
+        Aluno aluno = new Aluno(2L, 20L, 1L, "111.222.333-44", "2000-05-15", "(62) 98888-2222", "Aluno João", "joao@treinamais.com");
         aluno.setNomeProfessor("Prof. Silva");
 
         assertEquals(Long.valueOf(2L), aluno.getId());
@@ -68,7 +68,7 @@ public class DaoTest {
 
     @Test
     public void testModelUsuario() {
-        Usuario_jv usuario = new Usuario_jv("Yuri Silva", "yuri@treinamais.com", "hash_senha", "ALUNO");
+        Usuario usuario = new Usuario("Yuri Silva", "yuri@treinamais.com", "hash_senha", "ALUNO");
         assertEquals("Yuri Silva", usuario.getNome());
         assertEquals("yuri@treinamais.com", usuario.getEmail());
         assertEquals("hash_senha", usuario.getSenha());

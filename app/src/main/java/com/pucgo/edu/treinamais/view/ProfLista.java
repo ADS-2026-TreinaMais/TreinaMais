@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.pucgo.edu.treinamais.databinding.ProfListaBinding;
-import com.pucgo.edu.treinamais.model.entity.Professor;
 import com.pucgo.edu.treinamais.security.SessionManager;
 
 public class ProfLista extends AppCompatActivity {

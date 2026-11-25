@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pucgo.edu.treinamais.databinding.ItemProfBinding;
-import com.pucgo.edu.treinamais.model.Professor;
 import com.pucgo.edu.treinamais.network.dto.ProfessorResponseDto;
 
 import java.util.ArrayList;

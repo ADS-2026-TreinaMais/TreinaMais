@@ -95,11 +95,8 @@ public class PainelProfessorActivity extends AppCompatActivity {
     private void configurarDadosUsuario() {
         binding.tvProfNome.setText(sessionManager.getUserNome());
 
-        binding.tvProfEmail.setText(
-                sessionManager.getUserEmail()
-                        + " ("
-                        + sessionManager.getUserTipo()
-                        + ")"
+        binding.tvProfEmail.setText(sessionManager.getUserEmail()
+                + " (" + sessionManager.getUserTipo() + ")"
         );
 
         atualizarTextoStatusSessao();

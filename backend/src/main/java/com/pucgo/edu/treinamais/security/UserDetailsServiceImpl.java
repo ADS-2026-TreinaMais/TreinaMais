@@ -1,7 +1,7 @@
 package com.pucgo.edu.treinamais.security;
 
-import com.pucgo.edu.treinamais.model.StatusUsuario;
-import com.pucgo.edu.treinamais.model.Usuario;
+import com.pucgo.edu.treinamais.localModel.StatusUsuario;
+import com.pucgo.edu.treinamais.localModel.Usuario;
 import com.pucgo.edu.treinamais.repository.UsuarioRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

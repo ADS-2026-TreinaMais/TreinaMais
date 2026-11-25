@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -41,9 +42,9 @@ public class ProfLista extends AppCompatActivity {
     }
 
     private void carregarProfs(){
-        ApiClient.getInstance(this).getAuthApiService().getProfessores(5).enqueue(new Callback<List<ProfessorResponseDto>>() {
+        ApiClient.getInstance(this).getAuthApiService().getProfessores(5).enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<List<ProfessorResponseDto>> call, Response<List<ProfessorResponseDto>> response) {
+            public void onResponse(@NonNull Call<List<ProfessorResponseDto>> call, @NonNull Response<List<ProfessorResponseDto>> response) {
                 if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()){
                     List<ProfessorResponseDto> profs = response.body();
                     Log.d(TAG, "Professores recebidos da API: " + profs.size());
@@ -60,7 +61,7 @@ public class ProfLista extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<ProfessorResponseDto>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<ProfessorResponseDto>> call, @NonNull Throwable t) {
                 Log.e(TAG, "Erro ao consultar api/professores: " + t.getMessage(), t);
                 B.RCVprofLista.setVisibility(View.GONE);
                 B.tvSemProfs.setVisibility(View.VISIBLE);
@@ -72,9 +73,9 @@ public class ProfLista extends AppCompatActivity {
         if (atribuindo) return; // evita requisições duplicadas por cliques repetidos
         atribuindo = true;
 
-        ApiClient.getInstance(this).getAuthApiService().escolherProfessor(prof.getId()).enqueue(new Callback<AlunoResponseDto>() {
+        ApiClient.getInstance(this).getAuthApiService().escolherProfessor(prof.getId()).enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<AlunoResponseDto> call, Response<AlunoResponseDto> response) {
+            public void onResponse(@NonNull Call<AlunoResponseDto> call, @NonNull Response<AlunoResponseDto> response) {
                 atribuindo = false;
                 if (response.isSuccessful() && response.body() != null){
                     AlunoResponseDto aluno = response.body();
@@ -89,7 +90,7 @@ public class ProfLista extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AlunoResponseDto> call, Throwable t) {
+            public void onFailure(@NonNull Call<AlunoResponseDto> call, @NonNull Throwable t) {
                 atribuindo = false;
                 Log.e(TAG, "Erro ao atribuir professor: " + t.getMessage(), t);
                 Toast.makeText(ProfLista.this, "Erro de rede ao selecionar professor.", Toast.LENGTH_SHORT).show();

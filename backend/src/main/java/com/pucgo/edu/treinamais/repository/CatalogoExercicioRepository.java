@@ -1,6 +1,6 @@
 package com.pucgo.edu.treinamais.repository;
 
-import com.pucgo.edu.treinamais.model.CatalogoExercicio;
+import com.pucgo.edu.treinamais.localModel.CatalogoExercicio;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

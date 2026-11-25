@@ -1,12 +1,10 @@
-package com.pucgo.edu.treinamais.model;
+package com.pucgo.edu.treinamais.localModel;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
-
-import com.pucgo.edu.treinamais.model.entity.UserSessionEntity;
 
 @Dao
 public interface SessionDao {

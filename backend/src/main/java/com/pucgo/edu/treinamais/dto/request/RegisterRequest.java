@@ -1,6 +1,6 @@
 package com.pucgo.edu.treinamais.dto.request;
 
-import com.pucgo.edu.treinamais.model.TipoUsuario;
+import com.pucgo.edu.treinamais.localModel.TipoUsuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

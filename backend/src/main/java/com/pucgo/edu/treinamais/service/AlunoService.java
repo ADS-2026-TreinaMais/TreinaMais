@@ -2,10 +2,10 @@ package com.pucgo.edu.treinamais.service;
 
 import com.pucgo.edu.treinamais.dto.response.AlunoResponse;
 import com.pucgo.edu.treinamais.exception.ResourceNotFoundException;
-import com.pucgo.edu.treinamais.model.Aluno;
-import com.pucgo.edu.treinamais.model.Professor;
-import com.pucgo.edu.treinamais.model.TipoUsuario;
-import com.pucgo.edu.treinamais.model.Usuario;
+import com.pucgo.edu.treinamais.localModel.Aluno;
+import com.pucgo.edu.treinamais.localModel.Professor;
+import com.pucgo.edu.treinamais.localModel.TipoUsuario;
+import com.pucgo.edu.treinamais.localModel.Usuario;
 import com.pucgo.edu.treinamais.repository.AlunoRepository;
 import com.pucgo.edu.treinamais.repository.ProfessorRepository;
 import com.pucgo.edu.treinamais.repository.UsuarioRepository;

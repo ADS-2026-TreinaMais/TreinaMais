@@ -1,4 +1,4 @@
-package com.pucgo.edu.treinamais.model;
+package com.pucgo.edu.treinamais.localModel;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

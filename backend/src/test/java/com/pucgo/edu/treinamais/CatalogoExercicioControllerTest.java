@@ -11,7 +11,7 @@ import com.pucgo.edu.treinamais.dto.request.LoginRequest;
 import com.pucgo.edu.treinamais.dto.request.RegisterRequest;
 import com.pucgo.edu.treinamais.dto.response.AuthResponse;
 import com.pucgo.edu.treinamais.exception.ExternalApiException;
-import com.pucgo.edu.treinamais.model.TipoUsuario;
+import com.pucgo.edu.treinamais.localModel.TipoUsuario;
 import com.pucgo.edu.treinamais.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

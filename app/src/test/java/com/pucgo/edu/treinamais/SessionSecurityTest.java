@@ -1,7 +1,7 @@
 package com.pucgo.edu.treinamais;
 
 import com.google.gson.Gson;
-import com.pucgo.edu.treinamais.model.entity.UserSessionEntity;
+import com.pucgo.edu.treinamais.localModel.entity.UserSessionEntity;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.LoginRequestDto;
 import com.pucgo.edu.treinamais.network.dto.RegisterRequestDto;

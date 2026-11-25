@@ -1,13 +1,10 @@
-package com.pucgo.edu.treinamais.model;
+package com.pucgo.edu.treinamais.localModel;
 
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-
-import com.pucgo.edu.treinamais.model.SessionDao;
-import com.pucgo.edu.treinamais.model.UserSessionEntity;
 
 @Database(entities = {UserSessionEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

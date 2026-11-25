@@ -7,8 +7,8 @@ import android.util.Log;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
-import com.pucgo.edu.treinamais.model.AppDatabase;
-import com.pucgo.edu.treinamais.model.UserSessionEntity;
+import com.pucgo.edu.treinamais.localModel.AppDatabase;
+import com.pucgo.edu.treinamais.localModel.UserSessionEntity;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 
 import java.util.concurrent.ExecutorService;

@@ -12,6 +12,8 @@ import com.pucgo.edu.treinamais.repository.AlunoRepository;
 import com.pucgo.edu.treinamais.repository.ProfessorRepository;
 import com.pucgo.edu.treinamais.repository.TreinoRepository;
 import com.pucgo.edu.treinamais.repository.UsuarioRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,8 +54,11 @@ public class ProfessorService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProfessorResponse> listarProfessores() {
-        return professorRepository.findAll().stream()
+    public List<ProfessorResponse> listarProfessores(Integer limit) {
+        List<Professor> professores = (limit != null && limit > 0)
+                ? professorRepository.findAll(PageRequest.of(0, limit, Sort.by("id"))).getContent()
+                : professorRepository.findAll();
+        return professores.stream()
                 .map(this::converterParaResponse)
                 .collect(Collectors.toList());
     }

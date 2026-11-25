@@ -1,4 +1,3 @@
-import jdk.jfr.internal.JVM
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -36,16 +35,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-}
-
-tasks.withType<JavaCompile> {
-    exclude(
-        "**/AlunoDAO_jv.java", "**/Professor_jv.java", "**/ProfessorDAO_jv.java",
-        "**/Usuario_jv.java"
-    )
-}
-tasks.withType<KotlinCompile> {
-    exclude("**/*.kt")
 }
 
 dependencies {

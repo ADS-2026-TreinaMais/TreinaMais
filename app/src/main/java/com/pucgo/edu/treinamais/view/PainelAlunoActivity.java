@@ -13,6 +13,7 @@ import com.pucgo.edu.treinamais.databinding.PainelAlunoBinding;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
+import com.pucgo.edu.treinamais.network.dto.ProfessorResponseDto;
 import com.pucgo.edu.treinamais.network.dto.TreinoResponseDto;
 import com.pucgo.edu.treinamais.security.SessionManager;
 
@@ -139,7 +140,11 @@ public class PainelAlunoActivity extends AppCompatActivity {
         B.btnAlunoLogout.setOnClickListener(v -> realizarLogout());
         B.btnRenovarSessaoAluno.setOnClickListener(v -> realizarRenovacao());
         B.btnVerificarStatusAluno.setOnClickListener(v -> testarEndpointMe());
-        //B.btnAddProf.setOnClickListener();
+
+        B.btnAddProf.setOnClickListener(v -> {
+            Intent intent = new Intent(PainelAlunoActivity.this, ProfLista.class);
+            startActivity(intent);
+        });
 
 
     }

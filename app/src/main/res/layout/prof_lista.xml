@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvSemProfs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -31,6 +31,7 @@
                 tools:ignore="HardcodedText" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RCVprofLista"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 

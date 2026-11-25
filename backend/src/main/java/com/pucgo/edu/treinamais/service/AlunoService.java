@@ -81,6 +81,22 @@ public class AlunoService {
     }
 
     @Transactional
+    public AlunoResponse escolherProfessor(String emailAluno, Long professorId) {
+        Usuario usuario = usuarioRepository.findByEmail(emailAluno)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado: " + emailAluno));
+
+        Aluno aluno = alunoRepository.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Perfil de aluno não encontrado"));
+
+        Professor professor = professorRepository.findById(professorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado com id: " + professorId));
+
+        aluno.setProfessor(professor);
+        Aluno salvo = alunoRepository.save(aluno);
+        return converterParaResponse(salvo);
+    }
+
+    @Transactional
     public AlunoResponse desvincularProfessor(Long alunoId) {
         Aluno aluno = alunoRepository.findById(alunoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado com id: " + alunoId));

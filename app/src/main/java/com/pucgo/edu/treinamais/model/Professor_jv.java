@@ -2,7 +2,7 @@ package com.pucgo.edu.treinamais.model;
 
 import java.util.Date;
 
-public class Professor {
+public class Professor_jv {
 
     private Long id;
     private Long usuarioId;
@@ -13,16 +13,16 @@ public class Professor {
     private String nome;
     private String email;
 
-    public Professor() {
+    public Professor_jv() {
     }
 
-    public Professor(Long usuarioId, String cref, String telefone) {
+    public Professor_jv(Long usuarioId, String cref, String telefone) {
         this.usuarioId = usuarioId;
         this.cref = cref;
         this.telefone = telefone;
     }
 
-    public Professor(Long id, Long usuarioId, String cref, String telefone, String nome, String email) {
+    public Professor_jv(Long id, Long usuarioId, String cref, String telefone, String nome, String email) {
         this.id = id;
         this.usuarioId = usuarioId;
         this.cref = cref;

@@ -1,5 +1,3 @@
-//ARQUIVO NO EXCLUDE DO BUILD.GRADLE
-
 package com.pucgo.edu.treinamais.model;
 
 import androidx.annotation.NonNull;
@@ -9,7 +7,7 @@ import androidx.room.Entity;
 import java.util.Date;
 
 @Entity(primaryKeys = {"uid", "aluno_id"})
-public class Aluno {
+public class Aluno_jv {
     @NonNull
     @ColumnInfo(name = "uid")
     private Long uid;

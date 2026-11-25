@@ -1,7 +1,7 @@
 package com.pucgo.edu.treinamais.dao;
 import android.util.Log;
 
-import com.pucgo.edu.treinamais.model.Aluno;
+import com.pucgo.edu.treinamais.model.Aluno_jv;
 import com.pucgo.edu.treinamais.model.ConnectionFactory;
 
 import java.sql.Connection;
@@ -14,11 +14,11 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlunoDAO {
+public class AlunoDAO_jv {
 
     private static final String TAG = "AlunoDAO";
 
-    public boolean inserir(Aluno aluno, String senhaHash) {
+    public boolean inserir(Aluno_jv aluno, String senhaHash) {
         String sqlUsuario = "INSERT INTO usuarios (nome, email, senha_hash, tipo, status) VALUES (?, ?, ?, 'ALUNO', 'ATIVO')";
         String sqlAluno = "INSERT INTO alunos (usuario_id, professor_id, cpf, data_nascimento, telefone) VALUES (?, ?, ?, ?, ?)";
 
@@ -104,7 +104,7 @@ public class AlunoDAO {
         }
     }
 
-    public boolean atualizar(Aluno aluno) {
+    public boolean atualizar(Aluno_jv aluno) {
         String sqlAluno = "UPDATE alunos SET professor_id = ?, cpf = ?, data_nascimento = ?, telefone = ? WHERE id = ?";
         String sqlUser = "UPDATE usuarios SET nome = ?, email = ? WHERE id = ?";
 
@@ -174,7 +174,7 @@ public class AlunoDAO {
         }
     }
 
-    public Aluno buscarPorId(Long id) {
+    public Aluno_jv buscarPorId(Long id) {
         String sql = "SELECT a.id, a.usuario_id, a.professor_id, a.cpf, a.data_nascimento, a.telefone, a.criado_em, " +
                      "u.nome, u.email, up.nome as nome_professor " +
                      "FROM alunos a " +
@@ -199,7 +199,7 @@ public class AlunoDAO {
         return null;
     }
 
-    public Aluno buscarPorCpf(String cpf) {
+    public Aluno_jv buscarPorCpf(String cpf) {
         String sql = "SELECT a.id, a.usuario_id, a.professor_id, a.cpf, a.data_nascimento, a.telefone, a.criado_em, " +
                      "u.nome, u.email, up.nome as nome_professor " +
                      "FROM alunos a " +
@@ -224,8 +224,8 @@ public class AlunoDAO {
         return null;
     }
 
-    public List<Aluno> listarTodos() {
-        List<Aluno> lista = new ArrayList<>();
+    public List<Aluno_jv> listarTodos() {
+        List<Aluno_jv> lista = new ArrayList<>();
         String sql = "SELECT a.id, a.usuario_id, a.professor_id, a.cpf, a.data_nascimento, a.telefone, a.criado_em, " +
                      "u.nome, u.email, up.nome as nome_professor " +
                      "FROM alunos a " +
@@ -248,8 +248,8 @@ public class AlunoDAO {
         return lista;
     }
 
-    public List<Aluno> listarPorProfessor(Long professorId) {
-        List<Aluno> lista = new ArrayList<>();
+    public List<Aluno_jv> listarPorProfessor(Long professorId) {
+        List<Aluno_jv> lista = new ArrayList<>();
         String sql = "SELECT a.id, a.usuario_id, a.professor_id, a.cpf, a.data_nascimento, a.telefone, a.criado_em, " +
                      "u.nome, u.email, up.nome as nome_professor " +
                      "FROM alunos a " +
@@ -295,8 +295,8 @@ public class AlunoDAO {
         }
     }
 
-    private Aluno mapearAluno(ResultSet rs) throws SQLException {
-        Aluno aluno = new Aluno();
+    private Aluno_jv mapearAluno(ResultSet rs) throws SQLException {
+        Aluno_jv aluno = new Aluno_jv();
         aluno.setId(rs.getLong("id"));
         aluno.setUsuarioId(rs.getLong("usuario_id"));
 

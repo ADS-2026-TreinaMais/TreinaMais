@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.pucgo.edu.treinamais.databinding.PainelProfBinding;
+import com.pucgo.edu.treinamais.R;
 import com.pucgo.edu.treinamais.model.Aluno;
 import com.pucgo.edu.treinamais.network.ApiClient;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
@@ -122,21 +122,12 @@ public class PainelProfessorActivity extends AppCompatActivity {
     }
 
     private void carregarAlunos() {
-        ApiClient.getInstance(this)
-                .getAuthApiService()
-                .getAlunos()
-                .enqueue(new Callback<List<Aluno>>() {
-
-                    @Override
-                    public void onResponse(
-                            Call<List<Aluno>> call,
-                            Response<List<Aluno>> response
-                    ) {
-                        if (response.isSuccessful() && response.body() != null) {
-
-                            List<Aluno> lista = response.body();
-
-                            Log.d(TAG, "Alunos recebidos da API: " + lista.size());
+        ApiClient.getInstance(this).getAuthApiService().getAlunos().enqueue(new Callback<List<Aluno_jv>>() {
+            @Override
+            public void onResponse(Call<List<Aluno_jv>> call, Response<List<Aluno_jv>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Aluno_jv> lista = response.body();
+                    Log.d(TAG, "Alunos recebidos da API: " + lista.size());
 
                             if (!lista.isEmpty()) {
                                 alunoAdapter.setAlunos(lista);
@@ -169,22 +160,13 @@ public class PainelProfessorActivity extends AppCompatActivity {
                         }
                     }
 
-                    @Override
-                    public void onFailure(
-                            Call<List<Aluno>> call,
-                            Throwable t
-                    ) {
-                        Log.e(
-                                TAG,
-                                "Erro de rede ao consultar /api/alunos: "
-                                        + t.getMessage(),
-                                t
-                        );
-
-                        binding.tvSemAlunos.setVisibility(View.VISIBLE);
-                        binding.recyclerAlunos.setVisibility(View.GONE);
-                    }
-                });
+            @Override
+            public void onFailure(Call<List<Aluno_jv>> call, Throwable t) {
+                Log.e(TAG, "Erro de rede ao consultar /api/alunos: " + t.getMessage(), t);
+                tvSemAlunos.setVisibility(View.VISIBLE);
+                recyclerAlunos.setVisibility(View.GONE);
+            }
+        });
 
         carregarMetricas();
     }

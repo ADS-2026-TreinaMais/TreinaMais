@@ -7,7 +7,7 @@ import android.util.Log;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
-import com.pucgo.edu.treinamais.database.AppDatabase;
+import com.pucgo.edu.treinamais.database.AppDatabase_jv;
 import com.pucgo.edu.treinamais.model.entity.UserSessionEntity;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 
@@ -29,7 +29,7 @@ public class SessionManager {
     private static volatile SessionManager instance;
 
     private final SharedPreferences preferences;
-    private final AppDatabase database;
+    private final AppDatabase_jv database;
     private final ExecutorService executorService;
     private SessionListener sessionListener;
 

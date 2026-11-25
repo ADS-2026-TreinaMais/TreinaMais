@@ -9,25 +9,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pucgo.edu.treinamais.R;
-import com.pucgo.edu.treinamais.model.Aluno;
+import com.pucgo.edu.treinamais.network.dto.AlunoResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHolder> {
 
-    private final List<Aluno> alunos = new ArrayList<>();
+    private final List<AlunoResponseDto> alunos = new ArrayList<>();
     private OnAlunoClickListener listener;
 
     public interface OnAlunoClickListener {
-        void onAlunoClick(Aluno aluno);
+        void onAlunoClick(AlunoResponseDto aluno);
     }
 
     public void setOnAlunoClickListener(OnAlunoClickListener listener) {
         this.listener = listener;
     }
 
-    public void setAlunos(List<Aluno> novosAlunos) {
+    public void setAlunos(List<AlunoResponseDto> novosAlunos) {
         this.alunos.clear();
         if (novosAlunos != null) {
             this.alunos.addAll(novosAlunos);
@@ -44,7 +44,7 @@ public class AlunoAdapter extends RecyclerView.Adapter<AlunoAdapter.AlunoViewHol
 
     @Override
     public void onBindViewHolder(@NonNull AlunoViewHolder holder, int position) {
-        Aluno aluno = alunos.get(position);
+        AlunoResponseDto aluno = alunos.get(position);
 
         holder.tvNome.setText(aluno.getNome() != null ? aluno.getNome() : "Aluno");
         holder.tvEmail.setText(aluno.getEmail() != null ? aluno.getEmail() : "");

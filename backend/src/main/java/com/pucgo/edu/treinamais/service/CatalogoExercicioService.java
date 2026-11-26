@@ -9,7 +9,7 @@ import com.pucgo.edu.treinamais.dto.response.CatalogoExercicioResponse;
 import com.pucgo.edu.treinamais.dto.response.CatalogoFiltrosResponse;
 import com.pucgo.edu.treinamais.exception.ExternalApiException;
 import com.pucgo.edu.treinamais.exception.ResourceNotFoundException;
-import com.pucgo.edu.treinamais.model.CatalogoExercicio;
+import com.pucgo.edu.treinamais.localModel.CatalogoExercicio;
 import com.pucgo.edu.treinamais.repository.CatalogoExercicioRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;

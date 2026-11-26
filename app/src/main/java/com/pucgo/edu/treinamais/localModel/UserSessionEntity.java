@@ -1,10 +1,10 @@
-package com.pucgo.edu.treinamais.model.entity;
+package com.pucgo.edu.treinamais.localModel;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "user_sessions")
+@Entity
 public class UserSessionEntity {
 
     @PrimaryKey

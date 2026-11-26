@@ -6,7 +6,7 @@ import com.pucgo.edu.treinamais.dto.request.ExercicioRequest;
 import com.pucgo.edu.treinamais.dto.response.ExercicioResponse;
 import com.pucgo.edu.treinamais.dto.response.TreinoResponse;
 import com.pucgo.edu.treinamais.exception.ResourceNotFoundException;
-import com.pucgo.edu.treinamais.model.*;
+import com.pucgo.edu.treinamais.localModel.*;
 import com.pucgo.edu.treinamais.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,10 +2,10 @@ package com.pucgo.edu.treinamais.service;
 
 import com.pucgo.edu.treinamais.dto.response.AlunoResponse;
 import com.pucgo.edu.treinamais.exception.ResourceNotFoundException;
-import com.pucgo.edu.treinamais.model.Aluno;
-import com.pucgo.edu.treinamais.model.Professor;
-import com.pucgo.edu.treinamais.model.TipoUsuario;
-import com.pucgo.edu.treinamais.model.Usuario;
+import com.pucgo.edu.treinamais.localModel.Aluno;
+import com.pucgo.edu.treinamais.localModel.Professor;
+import com.pucgo.edu.treinamais.localModel.TipoUsuario;
+import com.pucgo.edu.treinamais.localModel.Usuario;
 import com.pucgo.edu.treinamais.repository.AlunoRepository;
 import com.pucgo.edu.treinamais.repository.ProfessorRepository;
 import com.pucgo.edu.treinamais.repository.UsuarioRepository;
@@ -71,6 +71,22 @@ public class AlunoService {
     public AlunoResponse vincularProfessor(Long alunoId, Long professorId) {
         Aluno aluno = alunoRepository.findById(alunoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado com id: " + alunoId));
+
+        Professor professor = professorRepository.findById(professorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado com id: " + professorId));
+
+        aluno.setProfessor(professor);
+        Aluno salvo = alunoRepository.save(aluno);
+        return converterParaResponse(salvo);
+    }
+
+    @Transactional
+    public AlunoResponse escolherProfessor(String emailAluno, Long professorId) {
+        Usuario usuario = usuarioRepository.findByEmail(emailAluno)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado: " + emailAluno));
+
+        Aluno aluno = alunoRepository.findByUsuarioId(usuario.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Perfil de aluno não encontrado"));
 
         Professor professor = professorRepository.findById(professorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado com id: " + professorId));

@@ -1,6 +1,6 @@
 package com.pucgo.edu.treinamais.repository;
 
-import com.pucgo.edu.treinamais.model.Aluno;
+import com.pucgo.edu.treinamais.localModel.Aluno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

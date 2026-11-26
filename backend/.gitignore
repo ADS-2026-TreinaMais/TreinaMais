@@ -30,3 +30,6 @@ target/
 
 ### Log files ###
 *.log
+
+### Variáveis de ambiente locais ###
+.env

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TreinaMais</string>
+    <string name="prof_Tempo">No %1$s há</string>
 </resources>

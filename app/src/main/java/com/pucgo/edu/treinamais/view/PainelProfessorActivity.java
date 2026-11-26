@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.pucgo.edu.treinamais.databinding.PainelProfBinding;
-import com.pucgo.edu.treinamais.model.Aluno;
 import com.pucgo.edu.treinamais.network.ApiClient;
+import com.pucgo.edu.treinamais.network.dto.AlunoResponseDto;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
 import com.pucgo.edu.treinamais.network.dto.ProfessorMetricasResponseDto;
@@ -33,7 +33,7 @@ public class PainelProfessorActivity extends AppCompatActivity {
 
     private static final String TAG = "PainelProfessor";
 
-    private PainelProfBinding binding;
+    private PainelProfBinding B;
 
     private AlunoAdapter alunoAdapter;
     private SessionManager sessionManager;
@@ -42,10 +42,10 @@ public class PainelProfessorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = PainelProfBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        B = PainelProfBinding.inflate(getLayoutInflater());
+        setContentView(B.getRoot());
 
-        binding.btnProfPerfil.setOnClickListener(v -> {
+        B.btnProfPerfil.setOnClickListener(v -> {
             Intent intent = new Intent(this, PerfilActivity.class);
             startActivity(intent);
         });
@@ -75,7 +75,7 @@ public class PainelProfessorActivity extends AppCompatActivity {
     }
 
     private void inicializarViews() {
-        binding.recyclerAlunos.setLayoutManager(
+        B.recyclerAlunos.setLayoutManager(
                 new LinearLayoutManager(this)
         );
 
@@ -89,17 +89,14 @@ public class PainelProfessorActivity extends AppCompatActivity {
             ).show();
         });
 
-        binding.recyclerAlunos.setAdapter(alunoAdapter);
+        B.recyclerAlunos.setAdapter(alunoAdapter);
     }
 
     private void configurarDadosUsuario() {
-        binding.tvProfNome.setText(sessionManager.getUserNome());
+        B.tvProfNome.setText(sessionManager.getUserNome());
 
-        binding.tvProfEmail.setText(
-                sessionManager.getUserEmail()
-                        + " ("
-                        + sessionManager.getUserTipo()
-                        + ")"
+        B.tvProfEmail.setText(sessionManager.getUserEmail()
+                + " (" + sessionManager.getUserTipo() + ")"
         );
 
         atualizarTextoStatusSessao();
@@ -116,48 +113,39 @@ public class PainelProfessorActivity extends AppCompatActivity {
 
             String dataStr = sdf.format(new Date(expiraEm));
 
-            binding.tvStatusSessao.setText(
+            B.tvStatusSessao.setText(
                     "Sessão ativa até: " + dataStr
             );
         } else {
-            binding.tvStatusSessao.setText("Sessão ativa.");
+            B.tvStatusSessao.setText("Sessão ativa.");
         }
     }
 
     private void carregarAlunos() {
-        ApiClient.getInstance(this)
-                .getAuthApiService()
-                .getAlunos()
-                .enqueue(new Callback<List<Aluno>>() {
-
-                    @Override
-                    public void onResponse(
-                            Call<List<Aluno>> call,
-                            Response<List<Aluno>> response
-                    ) {
-                        if (response.isSuccessful() && response.body() != null) {
-
-                            List<Aluno> lista = response.body();
-
-                            Log.d(TAG, "Alunos recebidos da API: " + lista.size());
+        ApiClient.getInstance(this).getAuthApiService().getAlunos().enqueue(new Callback<List<AlunoResponseDto>>() {
+            @Override
+            public void onResponse(Call<List<AlunoResponseDto>> call, Response<List<AlunoResponseDto>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<AlunoResponseDto> lista = response.body();
+                    Log.d(TAG, "Alunos recebidos da API: " + lista.size());
 
                             if (!lista.isEmpty()) {
                                 alunoAdapter.setAlunos(lista);
 
-                                binding.tvSemAlunos.setVisibility(View.GONE);
-                                binding.recyclerAlunos.setVisibility(View.VISIBLE);
+                                B.tvSemAlunos.setVisibility(View.GONE);
+                                B.recyclerAlunos.setVisibility(View.VISIBLE);
 
-                                binding.alunos.setText(
+                                B.alunos.setText(
                                         String.valueOf(lista.size())
                                 );
 
                             } else {
                                 alunoAdapter.setAlunos(Collections.emptyList());
 
-                                binding.tvSemAlunos.setVisibility(View.VISIBLE);
-                                binding.recyclerAlunos.setVisibility(View.GONE);
+                                B.tvSemAlunos.setVisibility(View.VISIBLE);
+                                B.recyclerAlunos.setVisibility(View.GONE);
 
-                                binding.alunos.setText("0");
+                                B.alunos.setText("0");
                             }
 
                         } else {
@@ -167,27 +155,18 @@ public class PainelProfessorActivity extends AppCompatActivity {
                                             + response.code()
                             );
 
-                            binding.tvSemAlunos.setVisibility(View.VISIBLE);
-                            binding.recyclerAlunos.setVisibility(View.GONE);
+                            B.tvSemAlunos.setVisibility(View.VISIBLE);
+                            B.recyclerAlunos.setVisibility(View.GONE);
                         }
                     }
 
-                    @Override
-                    public void onFailure(
-                            Call<List<Aluno>> call,
-                            Throwable t
-                    ) {
-                        Log.e(
-                                TAG,
-                                "Erro de rede ao consultar /api/alunos: "
-                                        + t.getMessage(),
-                                t
-                        );
-
-                        binding.tvSemAlunos.setVisibility(View.VISIBLE);
-                        binding.recyclerAlunos.setVisibility(View.GONE);
-                    }
-                });
+            @Override
+            public void onFailure(Call<List<AlunoResponseDto>> call, Throwable t) {
+                Log.e(TAG, "Erro de rede ao consultar /api/alunos: " + t.getMessage(), t);
+                B.tvSemAlunos.setVisibility(View.VISIBLE);
+                B.recyclerAlunos.setVisibility(View.GONE);
+            }
+        });
 
         carregarMetricas();
     }
@@ -207,15 +186,15 @@ public class PainelProfessorActivity extends AppCompatActivity {
 
                             ProfessorMetricasResponseDto metricas = response.body();
 
-                            binding.alunos.setText(
+                            B.alunos.setText(
                                     String.valueOf(metricas.getTotalAlunos())
                             );
 
-                            binding.treinosCriados.setText(
+                            B.treinosCriados.setText(
                                     String.valueOf(metricas.getTotalTreinos())
                             );
 
-                            binding.ativosHoje.setText(
+                            B.ativosHoje.setText(
                                     String.valueOf(metricas.getAlunosAtivos())
                             );
                         }
@@ -235,11 +214,11 @@ public class PainelProfessorActivity extends AppCompatActivity {
     }
 
     private void configurarListeners() {
-        binding.btnProfLogout.setOnClickListener(v -> realizarLogout());
+        B.btnProfLogout.setOnClickListener(v -> realizarLogout());
 
-        binding.btnRenovarSessao.setOnClickListener(v -> realizarRenovacao());
+        B.btnRenovarSessao.setOnClickListener(v -> realizarRenovacao());
 
-        binding.btnVerificarStatus.setOnClickListener(v -> testarEndpointMe());
+        B.btnVerificarStatus.setOnClickListener(v -> testarEndpointMe());
     }
 
     private void configurarMonitoramentoSessao() {
@@ -382,7 +361,7 @@ public class PainelProfessorActivity extends AppCompatActivity {
 
                             Map<String, String> data = response.body();
 
-                            binding.tvStatusSessao.setText(
+                            B.tvStatusSessao.setText(
                                     "Autenticado como: "
                                             + data.get("email")
                                             + "\nPermissões: "

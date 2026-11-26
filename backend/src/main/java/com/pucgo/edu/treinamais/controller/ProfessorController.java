@@ -36,8 +36,9 @@ public class ProfessorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProfessorResponse>> listarProfessores() {
-        List<ProfessorResponse> professores = professorService.listarProfessores();
+    public ResponseEntity<List<ProfessorResponse>> listarProfessores(
+            @RequestParam(required = false) Integer limit) {
+        List<ProfessorResponse> professores = professorService.listarProfessores(limit);
         return ResponseEntity.ok(professores);
     }
 

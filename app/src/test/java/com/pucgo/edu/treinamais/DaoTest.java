@@ -1,11 +1,11 @@
 package com.pucgo.edu.treinamais;
 
-import com.pucgo.edu.treinamais.dao.AlunoDAO;
-import com.pucgo.edu.treinamais.dao.ProfessorDAO;
-import com.pucgo.edu.treinamais.model.Aluno;
-import com.pucgo.edu.treinamais.model.ConnectionFactory;
-import com.pucgo.edu.treinamais.model.Professor;
-import com.pucgo.edu.treinamais.model.Usuario;
+import com.pucgo.edu.treinamais.dao.AlunoDAO_jv;
+import com.pucgo.edu.treinamais.dao.ProfessorDAO_jv;
+import com.pucgo.edu.treinamais.localModel.Aluno;
+import com.pucgo.edu.treinamais.localModel.ConnectionFactory;
+import com.pucgo.edu.treinamais.localModel.Professor;
+import com.pucgo.edu.treinamais.localModel.Usuario;
 
 import org.junit.Test;
 
@@ -31,10 +31,10 @@ public class DaoTest {
 
     @Test
     public void testInstanciacaoDao() {
-        ProfessorDAO professorDAO = new ProfessorDAO();
+        ProfessorDAO_jv professorDAO = new ProfessorDAO_jv();
         assertNotNull(professorDAO);
 
-        AlunoDAO alunoDAO = new AlunoDAO();
+        AlunoDAO_jv alunoDAO = new AlunoDAO_jv();
         assertNotNull(alunoDAO);
     }
 

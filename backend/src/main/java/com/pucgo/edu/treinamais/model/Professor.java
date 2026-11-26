@@ -1,4 +1,4 @@
-package com.pucgo.edu.treinamais.model;
+package com.pucgo.edu.treinamais.localModel;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

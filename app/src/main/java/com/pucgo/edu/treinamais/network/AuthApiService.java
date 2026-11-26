@@ -1,11 +1,11 @@
 package com.pucgo.edu.treinamais.network;
 
-import com.pucgo.edu.treinamais.model.Aluno;
 import com.pucgo.edu.treinamais.network.dto.AlunoResponseDto;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.LoginRequestDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
 import com.pucgo.edu.treinamais.network.dto.ProfessorMetricasResponseDto;
+import com.pucgo.edu.treinamais.network.dto.ProfessorResponseDto;
 import com.pucgo.edu.treinamais.network.dto.RegisterRequestDto;
 import com.pucgo.edu.treinamais.network.dto.TreinoResponseDto;
 
@@ -17,7 +17,9 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface AuthApiService {
 
@@ -37,17 +39,25 @@ public interface AuthApiService {
     Call<Map<String, String>> getCurrentUser();
 
     @GET("api/alunos")
-    Call<List<Aluno>> getAlunos();
+    Call<List<AlunoResponseDto>> getAlunos();
 
     @GET("api/alunos/me")
     Call<AlunoResponseDto> getMeuPerfilAluno();
 
+    @PUT("api/alunos/me/professor/{professorId}")
+    Call<AlunoResponseDto> escolherProfessor(@Path("professorId") Long professorId);
+
     @GET("api/professores/me/metricas")
     Call<ProfessorMetricasResponseDto> getMetricasProfessor();
+
+    @GET("api/professores")
+    Call<List<ProfessorResponseDto>> getProfessores(@Query("limit") Integer limit);
 
     @GET("api/treinos")
     Call<List<TreinoResponseDto>> getTreinos();
 
     @GET("api/treinos/{id}")
     Call<TreinoResponseDto> getTreinoPorId(@Path("id") Long id);
+
+
 }

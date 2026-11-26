@@ -4,7 +4,7 @@ import com.pucgo.edu.treinamais.dto.request.LoginRequest;
 import com.pucgo.edu.treinamais.dto.request.RegisterRequest;
 import com.pucgo.edu.treinamais.dto.response.AuthResponse;
 import com.pucgo.edu.treinamais.dto.response.MessageResponse;
-import com.pucgo.edu.treinamais.model.*;
+import com.pucgo.edu.treinamais.localModel.*;
 import com.pucgo.edu.treinamais.repository.AlunoRepository;
 import com.pucgo.edu.treinamais.repository.ProfessorRepository;
 import com.pucgo.edu.treinamais.repository.SessaoRepository;

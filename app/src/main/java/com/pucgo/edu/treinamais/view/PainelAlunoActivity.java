@@ -9,8 +9,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.pucgo.edu.treinamais.databinding.PainelAlunoBinding;
 import com.pucgo.edu.treinamais.network.ApiClient;
+import com.pucgo.edu.treinamais.network.dto.AlunoResponseDto;
 import com.pucgo.edu.treinamais.network.dto.AuthResponseDto;
 import com.pucgo.edu.treinamais.network.dto.MessageResponseDto;
 import com.pucgo.edu.treinamais.network.dto.ProfessorResponseDto;
@@ -141,16 +143,49 @@ public class PainelAlunoActivity extends AppCompatActivity {
         B.btnRenovarSessaoAluno.setOnClickListener(v -> realizarRenovacao());
         B.btnVerificarStatusAluno.setOnClickListener(v -> testarEndpointMe());
 
-        B.btnAddProf.setOnClickListener(v -> {
+        B.btnAddProf.setOnClickListener(v ->
+                startActivity(new Intent(PainelAlunoActivity.this, ProfLista.class)));
+
+        B.btnMeuProf.setOnClickListener(v -> {
             Intent intent = new Intent(PainelAlunoActivity.this, ProfLista.class);
+            intent.putExtra(ProfLista.EXTRA_SOMENTE_MEU_PROF, true);
             startActivity(intent);
         });
 
-
+        B.btnExcluirProf.setOnClickListener(v -> confirmarRemocaoProfessor());
     }
 
-    private void addProfs(){
+    private void confirmarRemocaoProfessor() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Remover professor")
+                .setMessage("Deseja desvincular seu professor atual?")
+                .setNegativeButton("Cancelar", null)
+                .setPositiveButton("Remover", (dialog, which) -> removerProfessor())
+                .show();
+    }
 
+    private void removerProfessor() {
+        B.btnExcluirProf.setEnabled(false);
+        ApiClient.getInstance(this).getAuthApiService().removerMeuProfessor().enqueue(new Callback<AlunoResponseDto>() {
+            @Override
+            public void onResponse(Call<AlunoResponseDto> call, Response<AlunoResponseDto> response) {
+                B.btnExcluirProf.setEnabled(true);
+                if (response.isSuccessful()) {
+                    Toast.makeText(PainelAlunoActivity.this, "Professor removido.", Toast.LENGTH_SHORT).show();
+                    carregarTreinos();
+                } else {
+                    Log.e(TAG, "Falha ao remover professor: HTTP " + response.code());
+                    Toast.makeText(PainelAlunoActivity.this, "Não foi possível remover o professor. Código: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AlunoResponseDto> call, Throwable t) {
+                B.btnExcluirProf.setEnabled(true);
+                Log.e(TAG, "Erro ao remover professor: " + t.getMessage(), t);
+                Toast.makeText(PainelAlunoActivity.this, "Erro de rede ao remover professor.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void configurarMonitoramentoSessao() {

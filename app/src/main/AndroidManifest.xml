@@ -38,6 +38,9 @@
         <activity
             android:name=".view.ProfLista"
             android:exported="false"/>
+        <activity
+            android:name=".view.AtribuicaoActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

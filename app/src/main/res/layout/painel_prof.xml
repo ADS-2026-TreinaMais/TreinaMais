@@ -75,7 +75,7 @@
                     <androidx.constraintlayout.helper.widget.Flow
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        app:constraint_referenced_ids="btnRenovarSessao,btnVerificarStatus,btnProfPerfil,btnProfLogout"
+                        app:constraint_referenced_ids="btnRenovarSessao,btnVerificarStatus,btnProfPerfil,btnProfLogout,btnGerenciarAtribuicoes"
                         app:flow_horizontalGap="4dp"
                         app:flow_maxElementsWrap="2"
                         app:flow_wrapMode="aligned"
@@ -121,6 +121,20 @@
                         app:cornerRadius="6dp"
                         tools:ignore="HardcodedText"
                         tools:layout_editor_absoluteX="171dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGerenciarAtribuicoes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:minWidth="120dp"
+                        android:singleLine="true"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:text="ATRIBUIÇÕES"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="6dp"
+                        tools:ignore="HardcodedText" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -229,6 +243,7 @@
                         android:textSize="12sp"
                         tools:ignore="HardcodedText" />
                 </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
             <TextView

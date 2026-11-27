@@ -219,6 +219,11 @@ public class PainelProfessorActivity extends AppCompatActivity {
         B.btnRenovarSessao.setOnClickListener(v -> realizarRenovacao());
 
         B.btnVerificarStatus.setOnClickListener(v -> testarEndpointMe());
+
+        B.btnGerenciarAtribuicoes.setOnClickListener(v -> {
+            Intent intent = new Intent(PainelProfessorActivity.this, AtribuicaoActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void configurarMonitoramentoSessao() {

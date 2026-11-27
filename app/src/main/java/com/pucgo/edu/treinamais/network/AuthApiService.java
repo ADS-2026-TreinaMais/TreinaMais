@@ -12,6 +12,7 @@ import com.pucgo.edu.treinamais.network.dto.TreinoResponseDto;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.http.DELETE;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -66,5 +67,16 @@ public interface AuthApiService {
     @GET("api/treinos/{id}")
     Call<TreinoResponseDto> getTreinoPorId(@Path("id") Long id);
 
+    @POST("api/treinos/{treinoId}/alunos/{alunoId}")
+    Call<MessageResponseDto> associarAlunoAoTreino(
+            @Path("treinoId") Long treinoId,
+            @Path("alunoId") Long alunoId
+    );
+
+    @DELETE("api/treinos/{treinoId}/alunos/{alunoId}")
+    Call<MessageResponseDto> desassociarAlunoDoTreino(
+            @Path("treinoId") Long treinoId,
+            @Path("alunoId") Long alunoId
+    );
 
 }

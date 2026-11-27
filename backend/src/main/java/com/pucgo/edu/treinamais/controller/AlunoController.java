@@ -35,6 +35,13 @@ public class AlunoController {
         return ResponseEntity.ok(aluno);
     }
 
+    @DeleteMapping("/me/professor")
+    @PreAuthorize("hasRole('ALUNO')")
+    public ResponseEntity<AlunoResponse> removerMeuProfessor(@AuthenticationPrincipal UserDetails userDetails) {
+        AlunoResponse aluno = alunoService.removerMeuProfessor(userDetails.getUsername());
+        return ResponseEntity.ok(aluno);
+    }
+
     @GetMapping
     public ResponseEntity<List<AlunoResponse>> listarAlunos(@AuthenticationPrincipal UserDetails userDetails) {
         List<AlunoResponse> alunos = alunoService.listarAlunos(userDetails.getUsername());

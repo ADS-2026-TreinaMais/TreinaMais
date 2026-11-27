@@ -23,6 +23,9 @@ import retrofit2.Response;
 
 public class ProfLista extends AppCompatActivity {
     private static final String TAG = "ProfLista";
+    /** Quando true, exibe apenas o professor vinculado ao aluno (somente leitura). */
+    public static final String EXTRA_SOMENTE_MEU_PROF = "somente_meu_prof";
+
     private ProfListaBinding B;
     private ProfAdapter profAdapter;
     private boolean atribuindo = false;
@@ -33,12 +36,72 @@ public class ProfLista extends AppCompatActivity {
         B = ProfListaBinding.inflate(getLayoutInflater());
         setContentView(B.getRoot());
 
+        boolean somenteMeuProf = getIntent().getBooleanExtra(EXTRA_SOMENTE_MEU_PROF, false);
+
         profAdapter = new ProfAdapter();
-        profAdapter.setOnProfClickListener(this::atribuirProfessor);
         B.RCVprofLista.setLayoutManager(new LinearLayoutManager(this));
         B.RCVprofLista.setAdapter(profAdapter);
 
-        carregarProfs();
+        if (somenteMeuProf) {
+            carregarMeuProf();
+        } else {
+            profAdapter.setOnProfClickListener(this::atribuirProfessor);
+            carregarProfs();
+        }
+    }
+
+    private void mostrarMensagem(String mensagem){
+        profAdapter.setProfs(Collections.emptyList());
+        B.RCVprofLista.setVisibility(View.GONE);
+        B.tvSemProfs.setText(mensagem);
+        B.tvSemProfs.setVisibility(View.VISIBLE);
+    }
+
+    private void carregarMeuProf(){
+        ApiClient.getInstance(this).getAuthApiService().getMeuPerfilAluno().enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<AlunoResponseDto> call, @NonNull Response<AlunoResponseDto> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    Log.e(TAG, "Falha ao consultar api/alunos/me: HTTP " + response.code());
+                    mostrarMensagem("Não foi possível carregar seu professor.");
+                    return;
+                }
+                Long professorId = response.body().getProfessorId();
+                if (professorId == null) {
+                    mostrarMensagem("Você ainda não tem um professor vinculado.");
+                    return;
+                }
+                buscarProfessor(professorId);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AlunoResponseDto> call, @NonNull Throwable t) {
+                Log.e(TAG, "Erro ao consultar api/alunos/me: " + t.getMessage(), t);
+                mostrarMensagem("Erro de rede ao carregar seu professor.");
+            }
+        });
+    }
+
+    private void buscarProfessor(Long professorId){
+        ApiClient.getInstance(this).getAuthApiService().getProfessorPorId(professorId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ProfessorResponseDto> call, @NonNull Response<ProfessorResponseDto> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    B.tvSemProfs.setVisibility(View.GONE);
+                    B.RCVprofLista.setVisibility(View.VISIBLE);
+                    profAdapter.setProfs(Collections.singletonList(response.body()));
+                } else {
+                    Log.e(TAG, "Falha ao consultar api/professores/" + professorId + ": HTTP " + response.code());
+                    mostrarMensagem("Não foi possível carregar seu professor.");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ProfessorResponseDto> call, @NonNull Throwable t) {
+                Log.e(TAG, "Erro ao consultar api/professores/" + professorId + ": " + t.getMessage(), t);
+                mostrarMensagem("Erro de rede ao carregar seu professor.");
+            }
+        });
     }
 
     private void carregarProfs(){

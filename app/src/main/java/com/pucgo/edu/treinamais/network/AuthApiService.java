@@ -14,6 +14,7 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -46,6 +47,12 @@ public interface AuthApiService {
 
     @PUT("api/alunos/me/professor/{professorId}")
     Call<AlunoResponseDto> escolherProfessor(@Path("professorId") Long professorId);
+
+    @DELETE("api/alunos/me/professor")
+    Call<AlunoResponseDto> removerMeuProfessor();
+
+    @GET("api/professores/{id}")
+    Call<ProfessorResponseDto> getProfessorPorId(@Path("id") Long id);
 
     @GET("api/professores/me/metricas")
     Call<ProfessorMetricasResponseDto> getMetricasProfessor();
